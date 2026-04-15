@@ -1,7 +1,7 @@
 [book]
-title = "CRE Bootcamp: Building AI-Powered Prediction Markets"
+title = "CRE 训练营: 开发一个 AI 驱动的预测市场"
 language = "en"
-description = "A 2-day bootcamp on building with Chainlink Runtime Environment (CRE)"
+description = "3 天 CRE(Chainlink Runtime Environment) 开发训练营"
 src = "src"
 
 [build]
