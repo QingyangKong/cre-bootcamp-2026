@@ -1,18 +1,18 @@
-# Log Trigger: Event-Driven Workflows
+# Log Trigger：事件驱动的 Workflow
 
-Today's big new concept: **Log Triggers**. These allow your workflow to react to on-chain events automatically.
+今天的重要新概念：**Log Trigger**。它让你的 workflow 能够自动响应链上事件。
 
-## Familiarize yourself with the capability
+## 熟悉该 capability
 
-The **EVM Log Trigger** fires when a smart contract emits a specific event. You create a Log Trigger by calling `EVMClient.logTrigger()` with a configuration that specifies which contract addresses and event topics to listen for.
+**EVM Log Trigger** 在智能合约发出特定事件时触发。你可以通过调用 `EVMClient.logTrigger()` 并传入配置来创建 Log Trigger，配置中指定要监听的合约地址和事件 topic。
 
-This is powerful because:
+这很有用，因为：
 
-- **Reactive**: Your workflow runs only when something happens on-chain
-- **Efficient**: No need to poll or check periodically
-- **Precise**: Filter by contract address, event signature, and topics
+- **响应式**：只在链上发生某件事时才运行 workflow
+- **高效**：无需轮询或定期检查
+- **精确**：可按合约地址、事件签名和 topic 过滤
 
-### Creating the trigger
+### 创建 trigger
 
 ```typescript
 import { cre, getNetwork } from "@chainlink/cre-sdk";
@@ -38,61 +38,63 @@ const trigger = evmClient.logTrigger({
 });
 ```
 
-### Configuration
+### 配置
 
-The `logTrigger()` method accepts a configuration object:
+`logTrigger()` 方法接受一个配置对象：
 
-| Field | Type | Description |
+| 字段 | 类型 | 说明 |
 |-------|------|-------------|
-| `addresses` | `string[]` | Contract addresses to monitor (at least one required) |
-| `topics` | `TopicValues[]` | Optional. Filter by event signature and indexed parameters |
-| `confidence` | `string` | Block confirmation level: `CONFIDENCE_LEVEL_LATEST`, `CONFIDENCE_LEVEL_SAFE` (default), or `CONFIDENCE_LEVEL_FINALIZED` |
+| `addresses` | `string[]` | 要监控的合约地址（至少需要一个） |
+| `topics` | `TopicValues[]` | 可选。按事件签名与 indexed 参数过滤 |
+| `confidence` | `string` | 区块确认级别：`CONFIDENCE_LEVEL_LATEST`、`CONFIDENCE_LEVEL_SAFE`（默认）或 `CONFIDENCE_LEVEL_FINALIZED` |
 
-### Log Trigger vs CRON Trigger
+### Log Trigger 与 CRON Trigger
 
-| Pattern | Log Trigger | CRON Trigger |
+| 模式 | Log Trigger | CRON Trigger |
 |---------|-------------|--------------|
-| **When it fires** | On-chain event emitted | Schedule (every hour, etc.) |
-| **Style** | Reactive | Proactive |
-| **Use case** | "When X happens, do Y" | "Check every hour for X" |
-| **Example** | Settlement requested → Settle | Hourly → Check all markets |
+| **触发时机** | 链上发出事件 | 按计划（例如每小时） |
+| **风格** | 响应式 | 主动式 |
+| **适用场景** | 「当 X 发生时，做 Y」 | 「每小时检查一次 X」 |
+| **示例** | Settlement requested → 结算 | 每小时 → 检查所有市场 |
 
-## Our Event: SettlementRequested
+## 我们的事件：SettlementRequested
 
-Recall our smart contract emits this event:
+回忆一下，我们的智能合约会发出该事件：
 
 ```solidity
 event SettlementRequested(uint256 indexed marketId, string question);
 ```
 
-We want CRE to:
-1. **Detect** when this event is emitted
-2. **Decode** the marketId and question
-3. **Run** our settlement workflow
+我们希望 CRE：
+
+1. **检测**该事件何时发出
+2. **解码** marketId 与 question
+3. **运行**我们的 settlement workflow
 
 
-## Understanding the EVMLog Payload
+## 理解 EVMLog Payload
 
-When CRE triggers your callback, it provides:
+当 CRE 触发你的 callback 时，会提供：
 
-| Property | Type | Description |
+| 属性 | 类型 | 说明 |
 |----------|------|-------------|
-| `topics` | `Uint8Array[]` | Event topics (indexed parameters) |
-| `data` | `Uint8Array` | Non-indexed event data |
-| `address` | `Uint8Array` | Contract address that emitted |
-| `blockNumber` | `bigint` | Block where event occurred |
-| `txHash` | `Uint8Array` | Transaction hash |
+| `topics` | `Uint8Array[]` | 事件 topics（indexed 参数） |
+| `data` | `Uint8Array` | 非 indexed 的事件数据 |
+| `address` | `Uint8Array` | 发出事件的合约地址 |
+| `blockNumber` | `bigint` | 事件所在区块 |
+| `txHash` | `Uint8Array` | 交易哈希 |
 
-### Decoding Topics
+### 解码 Topics
 
-For `SettlementRequested(uint256 indexed marketId, string question)`:
-- `topics[0]` = Event signature hash
-- `topics[1]` = `marketId` (indexed, so it's in topics)
-- `data` = `question` (not indexed)
+对于 `SettlementRequested(uint256 indexed marketId, string question)`：
 
-## Creating logCallback.ts
+- `topics[0]` = 事件签名哈希
+- `topics[1]` = `marketId`（indexed，因此在 topics 中）
+- `data` = `question`（非 indexed）
 
-Create a new file `my-workflow/logCallback.ts` with the event decoding logic:
+## 创建 logCallback.ts
+
+新建文件 `my-workflow/logCallback.ts`，写入事件解码逻辑：
 
 ```typescript
 // prediction-market/my-workflow/logCallback.ts
@@ -140,9 +142,9 @@ export function onLogTrigger(runtime: Runtime<Config>, log: EVMLog): string {
 }
 ```
 
-## Updating main.ts
+## 更新 main.ts
 
-Update `my-workflow/main.ts` to register the Log Trigger:
+更新 `my-workflow/main.ts`，注册 Log Trigger：
 
 ```typescript
 // prediction-market/my-workflow/main.ts
@@ -207,9 +209,9 @@ export async function main() {
 main();
 ```
 
-## Simulating a Log Trigger
+## 模拟 Log Trigger
 
-### 1. First, request settlement on your contract
+### 1. 先在合约上请求 settlement
 
 ```bash
 cast send $MARKET_ADDRESS \
@@ -219,16 +221,16 @@ cast send $MARKET_ADDRESS \
   --private-key $CRE_ETH_PRIVATE_KEY
 ```
 
-**Save the transaction hash!**
+**请保存交易哈希！**
 
-### 2. Run the simulation
+### 2. 运行 simulation
 
 ```bash
 # From the prediction-market directory
 cre workflow simulate my-workflow
 ```
 
-### 3. Select Log Trigger
+### 3. 选择 Log Trigger
 
 ```bash
 🚀 Workflow simulation ready. Please select a trigger:
@@ -238,7 +240,7 @@ cre workflow simulate my-workflow
 Enter your choice (1-2): 2
 ```
 
-### 4. Enter the transaction details
+### 4. 输入交易详情
 
 ```bash
 🔗 EVM Trigger Configuration:
@@ -246,17 +248,17 @@ Please provide the transaction hash and event index for the EVM log event.
 Enter transaction hash (0x...):
 ```
 
-Paste the transaction hash from Step 1.
+粘贴步骤 1 中的交易哈希。
 
-### 5. Enter event index
+### 5. 输入 event index
 
 ```bash
 Enter event index (0-based): 0
 ```
 
-Enter **0**.
+输入 **0**。
 
-### Expected Output
+### 预期输出
 
 ```bash
 [SIMULATION] Running trigger trigger=evm:ChainSelector:16015286601757825753@1.0.0
@@ -269,13 +271,13 @@ Workflow Simulation Result:
 [SIMULATION] Execution finished signal received
 ```
 
-## Key Takeaways
+## 要点回顾
 
-- **Log Triggers** react to on-chain events automatically
-- Use `keccak256(toHex("EventName(types)"))` to compute the event hash
-- Decode events using Viem's `decodeEventLog`
-- Test by first triggering the event on-chain, then simulating with the tx hash
+- **Log Trigger** 会自动响应链上事件
+- 使用 `keccak256(toHex("EventName(types)"))` 计算事件哈希
+- 使用 Viem 的 `decodeEventLog` 解码事件
+- 测试流程：先在链上触发事件，再用 tx hash 进行 simulation
 
-## Next Steps
+## 下一步
 
-Now let's read more data from the contract before settling.
+接下来在结算之前，我们需要从合约读取更多数据。

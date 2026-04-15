@@ -1,8 +1,8 @@
-# Complete Workflow: Wiring It Together
+# 完整 Workflow：把它们接在一起
 
-It's time to combine everything into a complete, working settlement workflow!
+是时候把所学组合成一个可运行的完整结算 workflow 了！
 
-## The Complete Flow
+## 完整流程
 
 ```
 SettlementRequested Event
@@ -38,9 +38,9 @@ SettlementRequested Event
     Return txHash
 ```
 
-## Complete logCallback.ts
+## 完整的 logCallback.ts
 
-Update `my-workflow/logCallback.ts` with the complete settlement flow:
+用下面的完整结算流程更新 `my-workflow/logCallback.ts`：
 
 ```typescript
 // prediction-market/my-workflow/logCallback.ts
@@ -303,9 +303,9 @@ export function onLogTrigger(runtime: Runtime<Config>, log: EVMLog): string {
 }
 ```
 
-## Making a Prediction
+## 下注预测
 
-Before requesting settlement, let's place a prediction on the market. This demonstrates the full flow - predictions with ETH, AI settlement, and winners claiming their share.
+在请求结算之前，我们先在市场上做一次预测。这样可以演示完整流程：用 ETH 下注、AI 结算、赢家领取份额。
 
 ```bash
 # Predict YES on market #0 with 0.01 ETH
@@ -317,7 +317,7 @@ cast send $MARKET_ADDRESS \
   --private-key $CRE_ETH_PRIVATE_KEY
 ```
 
-We can then see the market details again:
+然后可以再次查看市场详情：
 
 ```bash
 cast call $MARKET_ADDRESS \
@@ -326,7 +326,7 @@ cast call $MARKET_ADDRESS \
   --rpc-url "https://ethereum-sepolia-rpc.publicnode.com"
 ```
 
-And even get our prediction only:
+也可以只查自己的预测：
 
 ```bash
 export PREDICTOR=0xYOUR_WALLET_ADDRESS
@@ -339,17 +339,17 @@ cast call $MARKET_ADDRESS \
   --rpc-url "https://ethereum-sepolia-rpc.publicnode.com"
 ```
 
-You can have multiple participants predict - some YES, some NO. After CRE settles the market, winners can call `claim()` to receive their share of the total pool!
+可以有多名参与者分别预测——有人选 YES，有人选 NO。CRE 完成市场结算后，赢家可以调用 `claim()` 领取总池中的份额！
 
 ---
 
-## Settle the Market
+## 结算市场
 
-Now let's execute the complete settlement flow using the Log Trigger.
+下面用 Log Trigger 执行完整结算流程。
 
-### Step 1: Request Settlement
+### 步骤 1：请求结算
 
-First, trigger the `SettlementRequested` event from the smart contract:
+首先从智能合约触发 `SettlementRequested` 事件：
 
 ```bash
 cast send $MARKET_ADDRESS \
@@ -358,15 +358,15 @@ cast send $MARKET_ADDRESS \
   --private-key $CRE_ETH_PRIVATE_KEY
 ```
 
-**Save the transaction hash!** You'll need it for the next step.
+**请保存交易哈希！** 下一步会用到。
 
-### Step 2: Run the Simulation
+### 步骤 2：运行 Simulation
 
 ```bash
 cre workflow simulate my-workflow --broadcast
 ```
 
-### Step 3: Select Log Trigger
+### 步骤 3：选择 Log Trigger
 
 ```bash
 🚀 Workflow simulation ready. Please select a trigger:
@@ -376,7 +376,7 @@ cre workflow simulate my-workflow --broadcast
 Enter your choice (1-2): 2
 ```
 
-### Step 4: Enter Transaction Details
+### 步骤 4：输入交易信息
 
 ```bash
 🔗 EVM Trigger Configuration:
@@ -384,17 +384,17 @@ Please provide the transaction hash and event index for the EVM log event.
 Enter transaction hash (0x...):
 ```
 
-Paste the transaction hash from Step 1.
+粘贴步骤 1 中的交易哈希。
 
-### Step 5: Enter Event Index
+### 步骤 5：输入 Event Index
 
 ```bash
 Enter event index (0-based): 0
 ```
 
-Enter **0**.
+输入 **0**。
 
-### Expected Output
+### 预期输出
 
 ```bash
 [SIMULATION] Running trigger trigger=evm:ChainSelector:16015286601757825753@1.0.0
@@ -426,7 +426,7 @@ Workflow Simulation Result:
 [SIMULATION] Execution finished signal received
 ```
 
-### Step 6: Verify Settlement On-Chain
+### 步骤 6：链上验证结算
 
 ```bash
 cast call $MARKET_ADDRESS \
@@ -435,11 +435,11 @@ cast call $MARKET_ADDRESS \
   --rpc-url "https://ethereum-sepolia-rpc.publicnode.com"
 ```
 
-You should see `settled: true` and the AI-determined outcome!
+你应能看到 `settled: true` 以及由 AI 判定的结果！
 
-### Step 7: Claim Your Winnings
+### 步骤 7：领取奖金
 
-If you predicted the winning outcome, claim your share of the pool:
+如果你预测的是获胜结果，可以领取池中属于你的部分：
 
 ```bash
 cast send $MARKET_ADDRESS \
@@ -450,30 +450,30 @@ cast send $MARKET_ADDRESS \
 
 ---
 
-## 🎉 You Did It!
+## 🎉 大功告成！
 
-**Congratulations!** You've just built and executed a complete AI-powered prediction market using CRE!
+**恭喜！** 你已经用 CRE 搭建并跑通了一个完整的 AI 驱动预测市场！
 
-Let's recap what you accomplished:
+快速回顾你完成的内容：
 
-| Capability | What You Built |
+| 能力 | 你构建的内容 |
 |------------|----------------|
-| **HTTP Trigger** | Market creation via API requests |
-| **Log Trigger** | Event-driven settlement automation |
-| **EVM Read** | Reading market state from the blockchain |
-| **HTTP (AI)** | Querying Gemini AI for real-world outcomes |
-| **EVM Write** | Verified on-chain writes with DON consensus |
+| **HTTP Trigger** | 通过 API 请求创建市场 |
+| **Log Trigger** | 基于事件的结算自动化 |
+| **EVM Read** | 从链上读取市场状态 |
+| **HTTP (AI)** | 查询 Gemini AI 获取真实世界结果 |
+| **EVM Write** | 经 DON 共识验证的链上写入 |
 
-Your workflow now:
-- ✅ Creates markets on-demand via HTTP
-- ✅ Listens for settlement requests via blockchain events
-- ✅ Reads market data from your smart contract
-- ✅ Queries AI to determine real-world outcomes
-- ✅ Writes verified settlements back on-chain
-- ✅ Enables winners to claim their rewards
+你的 workflow 现在可以：
+- ✅ 通过 HTTP 按需创建市场
+- ✅ 监听链上事件以接收结算请求
+- ✅ 从智能合约读取市场数据
+- ✅ 查询 AI 以判定真实世界结果
+- ✅ 将经校验的结算写回链上
+- ✅ 让赢家领取奖励
 
 ---
 
-## Next Steps
+## 下一步
 
-Head to the final chapter for a complete end-to-end walkthrough and what's next for your CRE journey!
+前往最后一章，查看完整的端到端演练以及 CRE 之路的后续方向！

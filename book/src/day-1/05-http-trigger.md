@@ -1,15 +1,16 @@
-# HTTP Trigger: Receiving Requests
+# HTTP Trigger：接收请求
 
-Now let's build a workflow that creates markets via HTTP requests.
+现在让我们构建一个通过 HTTP 请求创建市场的 workflow。
 
-## Familiarize yourself with the capability
+## 熟悉 HTTP Trigger
 
-The **HTTP Trigger** fires when an HTTP request is made to the workflow's designated endpoint. This allows you to start workflows from external systems, perfect for:
-- Creating resources (like our markets)
-- API-driven workflows
-- Integrating with external systems
+当向 workflow 的指定端点发起 HTTP 请求时，**HTTP Trigger** 会触发。这让你可以从外部系统启动 workflow，适用于：
 
-### Creating the trigger
+- 创建资源（例如我们的市场）
+- 由 API 驱动的 workflow
+- 与外部系统集成
+
+### 创建 trigger
 
 ```typescript
 import { cre } from "@chainlink/cre-sdk";
@@ -30,20 +31,20 @@ const trigger = http.trigger({
 });
 ```
 
-### Configuration
+### 配置
 
-The `trigger()` method accepts a configuration object with the following field:
+`trigger()` 方法接受一个配置对象，包含以下字段：
 
-- `authorizedKeys`: `AuthorizedKey[]` - A list of public keys used to validate the signature of incoming requests.
+- `authorizedKeys`：`AuthorizedKey[]` — 用于校验入站请求签名的公钥列表。
 
 ### `AuthorizedKey`
 
-Defines a public key used for request authentication.
+定义用于请求认证的公钥。
 
-- `type`: `string` - The type of the key. Use `"KEY_TYPE_ECDSA_EVM"` for EVM signatures.
-- `publicKey`: `string` - The public key as a string.
+- `type`：`string` — 密钥类型。对 EVM 签名使用 `"KEY_TYPE_ECDSA_EVM"`。
+- `publicKey`：`string` — 以字符串形式表示的公钥。
 
-**Example:**
+**示例：**
 
 ```typescript
 const config = {
@@ -58,15 +59,15 @@ const config = {
 
 ### Payload
 
-The payload passed to your callback function contains the HTTP request data.
+传递给你回调函数的 payload 包含 HTTP 请求数据。
 
-- `input`: `Uint8Array` - The JSON input from the HTTP request body as raw bytes.
-- `method`: `string` - HTTP method (GET, POST, etc.).
-- `headers`: `Record<string, string>` - Request headers.
+- `input`：`Uint8Array` — HTTP 请求体中的 JSON 输入，以原始字节表示。
+- `method`：`string` — HTTP 方法（GET、POST 等）。
+- `headers`：`Record<string, string>` — 请求头。
 
-**Working with the `input` field:**
+**使用 `input` 字段：**
 
-The `input` field is a `Uint8Array` containing the raw bytes of the HTTP request body. The SDK provides a `decodeJson` helper to parse it:
+`input` 字段是包含 HTTP 请求体原始字节的 `Uint8Array`。SDK 提供 `decodeJson` 辅助函数用于解析：
 
 ```typescript
 import { decodeJson } from "@chainlink/cre-sdk";
@@ -81,9 +82,9 @@ const inputString = new TextDecoder().decode(payload.input);
 const inputJson = JSON.parse(new TextDecoder().decode(payload.input));
 ```
 
-### Callback function
+### 回调函数
 
-Your callback function for HTTP triggers must conform to this signature:
+HTTP trigger 的回调函数必须符合以下签名：
 
 ```typescript
 import { type Runtime, type HTTPPayload } from "@chainlink/cre-sdk";
@@ -94,18 +95,18 @@ const onHttpTrigger = (runtime: Runtime<Config>, payload: HTTPPayload): YourRetu
 }
 ```
 
-**Parameters:**
+**参数：**
 
-- `runtime`: The runtime object used to invoke capabilities and access configuration
-- `payload`: The HTTP payload containing the request input, method, and headers
+- `runtime`：用于调用能力并访问配置的 runtime 对象
+- `payload`：包含请求 input、method 与 headers 的 HTTP payload
 
-## Building Our HTTP Trigger
+## 构建我们的 HTTP Trigger
 
-Now let's build our HTTP trigger workflow. We'll work in the `my-workflow` directory created by `cre init`.
+现在来构建 HTTP trigger workflow。我们将在 `cre init` 创建的 `my-workflow` 目录中工作。
 
-### Step 1: Create httpCallback.ts
+### 步骤 1：创建 httpCallback.ts
 
-Create a new file `my-workflow/httpCallback.ts`:
+新建文件 `my-workflow/httpCallback.ts`：
 
 ```typescript
 // prediction-market/my-workflow/httpCallback.ts
@@ -157,9 +158,10 @@ export function onHttpTrigger(runtime: Runtime<Config>, payload: HTTPPayload): s
 }
 ```
 
-### Step 2: Update main.ts
 
-Update `my-workflow/main.ts` to register the HTTP trigger:
+### 步骤 2：更新 main.ts
+
+更新 `my-workflow/main.ts` 以注册 HTTP trigger：
 
 ```typescript
 // prediction-market/my-workflow/main.ts
@@ -197,9 +199,9 @@ main();
 ```
 
 
-## Simulating the HTTP Trigger
+## 模拟 HTTP Trigger
 
-### 1. Run the Simulation
+### 1. 运行模拟
 
 ```bash
 # From the prediction-market directory (parent of my-workflow)
@@ -207,7 +209,7 @@ cd prediction-market
 cre workflow simulate my-workflow
 ```
 
-You should see:
+你应该看到：
 
 ```bash
 Workflow compiled
@@ -219,15 +221,15 @@ You can enter a file path or JSON directly.
 Enter your input: 
 ```
 
-### 2. Enter the JSON Payload
+### 2. 输入 JSON Payload
 
-When prompted, paste:
+出现提示时，粘贴：
 
 ```json
 {"question": "Will Argentina win the 2022 World Cup?"}
 ```
 
-### Expected Output
+### 预期输出
 
 ```
 [USER LOG] ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -241,9 +243,9 @@ Workflow Simulation Result:
 [SIMULATION] Execution finished signal received
 ```
 
-## Authorization (Production)
+## 授权（生产环境）
 
-For production, you'll need to configure `authorizedKeys` with actual public keys:
+在生产环境中，你需要用真实的公钥配置 `authorizedKeys`：
 
 ```typescript
 http.trigger({
@@ -256,17 +258,18 @@ http.trigger({
 })
 ```
 
-This ensures only authorized callers can trigger your workflow. For simulation, we use an empty string.
+这样可以确保只有授权调用方可以触发你的 workflow。模拟时我们使用空配置对象。
 
 
-## Summary
+## 小结
 
-You've learned:
-- ✅ How HTTP Triggers work
-- ✅ How to decode JSON payloads
-- ✅ How to validate input
-- ✅ How to simulate HTTP triggers
+你已经了解：
 
-## Next Steps
+- ✅ HTTP Trigger 如何工作
+- ✅ 如何解码 JSON payload
+- ✅ 如何校验输入
+- ✅ 如何模拟 HTTP trigger
 
-Now let's complete the workflow by writing the market to the blockchain!
+## 下一步
+
+现在让我们通过将市场写入区块链来完成整个 workflow！

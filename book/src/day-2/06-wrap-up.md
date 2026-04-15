@@ -1,10 +1,10 @@
-# Wrap-Up: End-to-End & What's Next
+# 收尾：端到端与后续方向
 
-You've built an AI-powered prediction market. Now let's walk through the complete flow from start to finish.
+你已经搭建了一个 AI 驱动的预测市场。下面从头到尾梳理完整流程。
 
-## Complete End-to-End Flow
+## 完整端到端流程
 
-Here's the full journey from market creation to claiming winnings:
+从创建市场到领取奖金的完整路径如下：
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
@@ -32,7 +32,7 @@ Here's the full journey from market creation to claiming winnings:
 └─────────────────────────────────────────────────────────────────┘
 ```
 
-### Step 0: Deploy the Contract
+### 步骤 0：部署合约
 
 ```bash
 source .env
@@ -45,26 +45,26 @@ forge create src/PredictionMarket.sol:PredictionMarket \
   --constructor-args 0x15fc6ae953e024d975e77382eeec56a9101f9f88
 ```
 
-Save the deployed address and update `config.staging.json`:
+保存部署地址并更新 `config.staging.json`：
 
 ```bash
 export MARKET_ADDRESS=0xYOUR_DEPLOYED_ADDRESS
 ```
 
-### Step 1: Create a Market
+### 步骤 1：创建市场
 
 ```bash
 cd .. # make sure you are in the prediction-market directory
 cre workflow simulate my-workflow --broadcast
 ```
 
-Select HTTP trigger (option 1), then enter:
+选择 HTTP trigger（选项 1），然后输入：
 
 ```json
 {"question": "Will Argentina win the 2022 World Cup?"}
 ```
 
-### Step 2: Place Predictions
+### 步骤 2：下注预测
 
 ```bash
 # Predict YES on market #0 with 0.01 ETH
@@ -75,7 +75,7 @@ cast send $MARKET_ADDRESS \
   --private-key $CRE_ETH_PRIVATE_KEY
 ```
 
-### Step 3: Request Settlement
+### 步骤 3：请求结算
 
 ```bash
 cast send $MARKET_ADDRESS \
@@ -84,17 +84,17 @@ cast send $MARKET_ADDRESS \
   --private-key $CRE_ETH_PRIVATE_KEY
 ```
 
-Save the transaction hash!
+保存交易哈希！
 
-### Step 4: Settle via CRE
+### 步骤 4：通过 CRE 结算
 
 ```bash
 cre workflow simulate my-workflow --broadcast
 ```
 
-Select Log trigger (option 2), enter the tx hash and event index 0.
+选择 Log trigger（选项 2），输入 tx hash 与 event index 0。
 
-### Step 5: Claim Winnings
+### 步骤 5：领取奖金
 
 ```bash
 cast send $MARKET_ADDRESS \
@@ -106,46 +106,46 @@ cast send $MARKET_ADDRESS \
 ---
 
 
-## What's Next?
+## 接下来做什么？
 
-### 🏆 Convergence: A Chainlink Hackathon
+### 🏆 Convergence：Chainlink Hackathon
 
 ![cre-hackathon-2026](../assets/cre-hackathon-2026.png)
 
-The **Convergence Hackathon** invites you to create advanced smart contracts using the Chainlink Runtime Environment, with $100K in prizes up for grabs.
+**Convergence Hackathon** 邀请你使用 Chainlink Runtime Environment 打造进阶智能合约，奖池高达 $100K。
 
-Connect chains, data, AI, and enterprise systems - all in one workflow.
+连接链、数据、AI 与企业系统——全部在同一个 workflow 中完成。
 
-Put your new CRE skills to the test! Join the upcoming hackathon and build something amazing.
+检验你新学的 CRE 技能！参加即将举办的 hackathon，做出令人眼前一亮的东西。
 
-Ideas to explore:
-- Stablecoin Issuance
-- Tokenized Asset Servicing and Lifecycle Management
-- Custom Proof of Reserve Data Feed
-- AI-Powered Prediction Market Settlement
-- Event-driven Market Resolution using Off-chain data
-- Automated Risk Monitoring
-- Real-Time Reserve Health Checks
-- Protocol Safeguard Triggers
-- AI Agents Consuming CRE Workflows With x402 Payments
-- AI Agent Blockchain Abstraction
-- AI-Assisted CRE Workflow Generation
-- Cross-chain Workflow Orchestration
-- Decentralized Backend Workflows for Web3 Applications
-- CRE Workflow Builders & Visualizers
-- and more...
+可探索的方向：
+- Stablecoin 发行
+- 代币化资产服务与全生命周期管理
+- 自定义 Proof of Reserve 数据喂价
+- AI 驱动的预测市场结算
+- 使用链下数据的事件驱动型市场决议
+- 自动化风险监控
+- 实时储备健康检查
+- 协议保护触发器
+- 通过 x402 支付消费 CRE workflow 的 AI Agent
+- AI Agent 的区块链抽象层
+- AI 辅助的 CRE workflow 生成
+- 跨链 workflow 编排
+- 面向 Web3 应用的去中心化后端 workflow
+- CRE workflow 搭建工具与可视化
+- 还有更多……
 
-### 📚 Explore More Use Cases
+### 📚 探索更多用例
 
-Check out [5 Ways to Build with CRE](https://blog.chain.link/5-ways-to-build-with-cre/):
+阅读 [5 Ways to Build with CRE](https://blog.chain.link/5-ways-to-build-with-cre/)：
 
-1. **Stablecoin Issuance** - Automated reserve verification
-2. **Tokenized Asset Servicing** - Real-world asset management
-3. **AI-Powered Prediction Markets** - You just built this!
-4. **AI Agents with x402 Payments** - Autonomous agents
-5. **Custom Proof of Reserve** - Transparency infrastructure
+1. **Stablecoin Issuance** - 自动化储备验证
+2. **Tokenized Asset Servicing** - 现实世界资产管理
+3. **AI-Powered Prediction Markets** - 你刚刚完成了这个！
+4. **AI Agents with x402 Payments** - 自主 agent
+5. **Custom Proof of Reserve** - 透明度基础设施
 
-### 🔗 Useful CRE links
+### 🔗 实用 CRE 链接
 
 - [Consensus Computing](https://docs.chain.link/cre/concepts/consensus-computing)
 - [Finality and Confidence Levels](https://docs.chain.link/cre/concepts/finality-ts)
@@ -153,17 +153,17 @@ Check out [5 Ways to Build with CRE](https://blog.chain.link/5-ways-to-build-wit
 - [Deploying Workflows](https://docs.chain.link/cre/guides/operations/deploying-workflows)
 - [Monitoring & Debugging Workflows](https://docs.chain.link/cre/guides/operations/monitoring-workflows)
 
-### 🚀 Deploy to Production
+### 🚀 部署到生产环境
 
-Ready to go live? Request Early Access:
+准备上线？申请 Early Access：
 - [cre.chain.link/request-access](https://cre.chain.link/request-access)
 
-### 💬 Join the Community
+### 💬 加入社区
 
-- [Discord](https://discord.gg/chainlink) - Get help and share your builds
-- [Developer Docs](https://docs.chain.link/cre) - Deep dive into CRE
-- [GitHub](https://github.com/smartcontractkit) - Explore examples
+- [Discord](https://discord.gg/chainlink) - 获取帮助并分享你的作品
+- [Developer Docs](https://docs.chain.link/cre) - 深入 CRE
+- [GitHub](https://github.com/smartcontractkit) - 浏览示例
 
 ---
 
-## 🎉 Thank You!
+## 🎉 感谢参与！

@@ -1,30 +1,30 @@
-# Recap & Q&A
+# 回顾与答疑
 
-Welcome back to Day 2! Let's recap what we learned yesterday and address any questions.
+欢迎回到 Day 2！让我们回顾昨天学到的内容，并解答一些常见问题。
 
-## Day 1 Recap
+## Day 1 回顾
 
-### What We Built
+### 我们构建的内容
 
-Yesterday, we built a **market creation workflow**:
+昨天，我们构建了一个**市场创建工作流**：
 
 ```
 HTTP Request ──▶ CRE Workflow ──▶ PredictionMarket.sol
 (question)       (HTTP Trigger)   (createMarket)
 ```
 
-### Key Concepts Covered
+### 涵盖的关键概念
 
-| Concept | What We Learned |
+| 概念 | 我们学到的内容 |
 |---------|-----------------|
-| **CRE Mental Model** | Workflows, Triggers, Capabilities, DONs |
-| **Project Structure** | project.yaml, workflow.yaml, config.json |
-| **HTTP Trigger** | Receiving external HTTP requests |
-| **EVM Write** | The two-step pattern (report → writeReport) |
+| **CRE Mental Model** | Workflows、Triggers、Capabilities、DONs |
+| **项目结构** | project.yaml、workflow.yaml、config.json |
+| **HTTP Trigger** | 接收外部 HTTP 请求 |
+| **EVM Write** | 两步模式（report → writeReport） |
 
-### The Two-Step Write Pattern
+### 两步写入模式
 
-This is the most important pattern from Day 1:
+这是 Day 1 中最重要的模式：
 
 ```typescript
 // Step 1: Encode and sign the data
@@ -47,16 +47,16 @@ const writeResult = evmClient
   .result();
 ```
 
-## Today's Agenda
+## 今日内容
 
-Today we'll complete the prediction market with:
+今天我们将完成预测市场，内容包括：
 
-1. **Log Trigger** - React to on-chain events
-2. **EVM Read** - Read state from smart contracts
-3. **HTTP Capability** - Call Gemini AI
-4. **Complete Flow** - Wire everything together
+1. **Log Trigger** — 响应链上事件
+2. **EVM Read** — 从智能合约读取状态
+3. **HTTP Capability** — 调用 Gemini AI
+4. **Complete Flow** — 将所有部分串联起来
 
-### Architecture
+### 架构
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
@@ -75,36 +75,38 @@ Today we'll complete the prediction market with:
 └─────────────────────────────────────────────────────────────────┘
 ```
 
-## Common Questions from Day 1
+## Day 1 常见问题
 
-### Q: Why do we need the two-step write pattern?
+### 问：为什么需要两步写入模式？
 
-**A:** The two-step pattern provides:
-- **Security**: The report is cryptographically signed by the DON
-- **Verification**: Your contract can verify the signature came from CRE
-- **Consensus**: Multiple nodes agree on the data before signing
+**答：** 两步模式提供：
 
-### Q: What happens if my transaction fails?
+- **安全性**：报告由 DON 加密签名
+- **可验证性**：合约可以验证签名来自 CRE
+- **共识**：多个节点在签名前就数据达成一致
 
-**A:** Check:
-1. Your wallet has enough ETH for gas
-2. The contract address is correct
-3. The gas limit is sufficient
-4. The contract function accepts the encoded data
+### 问：如果交易失败怎么办？
 
-### Q: How do I debug workflow issues?
+**答：** 请检查：
 
-**A:** Use `runtime.log()` liberally:
+1. 钱包中有足够的 ETH 支付 gas
+2. 合约地址正确
+3. gas limit 足够
+4. 合约函数接受编码后的数据
+
+### 问：如何调试 workflow 问题？
+
+**答：** 多使用 `runtime.log()`：
 
 ```typescript
 runtime.log(`[DEBUG] Value: ${JSON.stringify(data)}`);
 ```
 
-All logs appear in the simulation output.
+所有日志都会出现在 simulation 输出中。
 
-### Q: Can I have multiple triggers in one workflow?
+### 问：一个 workflow 里可以有多个 trigger 吗？
 
-**A:** Yes! That's exactly what we'll do today. A workflow can have up to 10 triggers.
+**答：** 可以！这正是今天要做的事。一个 workflow 最多可以有 10 个 trigger。
 
 ```typescript
 const initWorkflow = (config: Config) => {
@@ -115,9 +117,9 @@ const initWorkflow = (config: Config) => {
 };
 ```
 
-## Quick Environment Check
+## 快速环境检查
 
-Before we continue, let's verify everything is set up:
+在继续之前，先确认环境已就绪：
 
 ```bash
 # Check CRE authentication
@@ -135,6 +137,6 @@ cast call $MARKET_ADDRESS \
   --rpc-url "https://ethereum-sepolia-rpc.publicnode.com"
 ```
 
-## Ready for Day 2!
+## 准备好开始 Day 2！
 
-Let's dive into Log Triggers and build the settlement workflow.
+接下来深入学习 Log Trigger，并构建 settlement workflow。

@@ -1,12 +1,12 @@
-# AI Integration: Gemini HTTP Requests
+# AI 集成：Gemini HTTP 请求
 
-Now for the exciting part - integrating AI to determine prediction market outcomes!
+现在进入激动人心的部分——集成 AI 来判断预测市场的结果！
 
-## Familiarize yourself with the capability
+## 熟悉这项能力
 
-The **HTTP Capability** (`HTTPClient`) allows your workflow to fetch data from any external API. All HTTP requests are wrapped in a consensus mechanism to provide a single, reliable result across multiple DON nodes.
+**HTTP 能力**（`HTTPClient`）让你的 workflow 可以从任意外部 API 获取数据。所有 HTTP 请求都会包在一层共识机制里，从而在多个 DON 节点之间得到单一、可靠的结果。
 
-### Creating the HTTP client
+### 创建 HTTP client
 
 ```typescript
 import { cre, consensusIdenticalAggregation } from "@chainlink/cre-sdk";
@@ -23,28 +23,28 @@ const result = httpClient
   .result();
 ```
 
-### Consensus aggregation options
+### 共识聚合选项
 
-**Built-in aggregation functions:**
+**内置聚合函数：**
 
-| Method | Description | Supported Types |
+| 方法 | 说明 | 支持的类型 |
 |--------|-------------|-----------------|
-| `consensusIdenticalAggregation<T>()` | All nodes must return identical results | Primitives, objects |
-| `consensusMedianAggregation<T>()` | Computes median across nodes | `number`, `bigint`, `Date` |
-| `consensusCommonPrefixAggregation<T>()` | Longest common prefix from arrays | `string[]`, `number[]` |
-| `consensusCommonSuffixAggregation<T>()` | Longest common suffix from arrays | `string[]`, `number[]` |
+| `consensusIdenticalAggregation<T>()` | 所有节点必须返回完全相同的结果 | 原始类型、对象 |
+| `consensusMedianAggregation<T>()` | 在节点间计算中位数 | `number`, `bigint`, `Date` |
+| `consensusCommonPrefixAggregation<T>()` | 数组的最长公共前缀 | `string[]`, `number[]` |
+| `consensusCommonSuffixAggregation<T>()` | 数组的最长公共后缀 | `string[]`, `number[]` |
 
-**Field aggregation functions** (used with `ConsensusAggregationByFields`):
+**字段聚合函数**（与 `ConsensusAggregationByFields` 一起使用）：
 
-| Function | Description | Compatible Types |
+| 函数 | 说明 | 兼容类型 |
 |----------|-------------|------------------|
-| `median` | Computes median | `number`, `bigint`, `Date` |
-| `identical` | Must be identical across nodes | Primitives, objects |
-| `commonPrefix` | Longest common prefix | Arrays |
-| `commonSuffix` | Longest common suffix | Arrays |
-| `ignore` | Ignored during consensus | Any |
+| `median` | 计算中位数 | `number`, `bigint`, `Date` |
+| `identical` | 节点间必须完全一致 | 原始类型、对象 |
+| `commonPrefix` | 最长公共前缀 | 数组 |
+| `commonSuffix` | 最长公共后缀 | 数组 |
+| `ignore` | 共识时忽略 | 任意类型 |
 
-### Request format
+### 请求格式
 
 ```typescript
 const req = {
@@ -62,13 +62,13 @@ const req = {
 };
 ```
 
-> **Note**: The `body` must be base64 encoded.
+> **注意**：`body` 必须进行 base64 编码。
 
-### Understanding cache settings
+### 理解 cache 设置
 
-By default, **all nodes in the DON execute HTTP requests**. For POST requests, this would cause duplicate API calls.
+默认情况下，**DON 中的所有节点都会执行 HTTP 请求**。对 POST 而言，这会导致重复调用 API。
 
-The solution is `cacheSettings`:
+解决办法是使用 `cacheSettings`：
 
 ```typescript
 cacheSettings: {
@@ -77,7 +77,7 @@ cacheSettings: {
 }
 ```
 
-**How it works:**
+**工作原理：**
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
@@ -96,18 +96,18 @@ cacheSettings: {
 └─────────────────────────────────────────────────────────────────┘
 ```
 
-**Result**: Only **one** actual HTTP call is made, while all nodes participate in consensus.
+**结果**：实际只发出 **一次** HTTP 调用，同时所有节点仍参与共识。
 
-> **Best Practice**: Use `cacheSettings` for all POST, PUT, PATCH, and DELETE requests to prevent duplicates.
+> **最佳实践**：对所有 POST、PUT、PATCH、DELETE 请求使用 `cacheSettings`，以避免重复请求。
 
 ### Secrets
 
-Secrets are securely managed credentials (API keys, tokens, etc.) made available to your workflow at runtime. In CRE:
+Secrets 是受安全管理的凭据（API key、token 等），在运行时提供给 workflow。在 CRE 中：
 
-- **In simulation**: Secrets are mapped in `secrets.yaml` to environment variables from your `.env` file
-- **In production**: Secrets are stored in the decentralized **Vault DON**
+- **在 simulation 中**：Secrets 在 `secrets.yaml` 中映射为来自 `.env` 的环境变量
+- **在生产环境中**：Secrets 存储在去中心化的 **Vault DON** 中
 
-To retrieve a secret in your workflow:
+在 workflow 中获取 secret：
 
 ```typescript
 const secret = runtime.getSecret({ id: "MY_SECRET_NAME" }).result();
@@ -116,31 +116,31 @@ const value = secret.value; // The actual secret string
 
 ---
 
-## Building Our Gemini Integration
+## 构建我们的 Gemini 集成
 
-Now let's apply these concepts to build our AI integration.
+下面把这些概念用起来，完成 AI 集成。
 
-### Gemini API Overview
+### Gemini API 概览
 
-We'll use Google's Gemini API:
-- Endpoint: `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent`
-- Authentication: API key in header
-- Feature: Google Search grounding for factual answers
+我们将使用 Google 的 Gemini API：
+- Endpoint：`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent`
+- 认证：在 header 中携带 API key
+- 特性：Google Search grounding，用于事实性回答
 
-## Step 1: Set Up Secrets
+## 步骤 1：配置 Secrets
 
-First, ensure your Gemini API key is configured.
+首先，确保已配置好 Gemini API key。
 
-**secrets.yaml:**
+**secrets.yaml：**
 ```yaml
 secretsNames:
     GEMINI_API_KEY:          # Use this name in workflows to access the secret
         - GEMINI_API_KEY_VAR # Name of the variable in the .env file
 ```
 
-Then, update the `secrets-path` in the `my-workflow/workflow.yaml` to `"../secrets.yaml"`
+然后，在 `my-workflow/workflow.yaml` 中把 `secrets-path` 更新为 `"../secrets.yaml"`
 
-**my-workflow/workflow.yaml:**
+**my-workflow/workflow.yaml：**
 
 ```yaml
 staging-settings:
@@ -152,14 +152,14 @@ staging-settings:
     secrets-path: "../secrets.yaml" # ADD THIS
 ```
 
-**In your callback:**
+**在你的 callback 中：**
 ```typescript
 const apiKey = runtime.getSecret({ id: "GEMINI_API_KEY" }).result();
 ```
 
-## Step 2: Create gemini.ts file
+## 步骤 2：创建 gemini.ts 文件
 
-Create a new file `my-workflow/gemini.ts`:
+新建文件 `my-workflow/gemini.ts`：
 
 ```typescript
 // prediction-market/my-workflow/gemini.ts
@@ -319,11 +319,11 @@ const buildGeminiRequest =
   };
 ```
 
-## Troubleshooting
+## 故障排查
 
-### Gemini API error: 429
+### Gemini API 报错：429
 
-If you are seeing the following error:
+如果你看到如下错误：
 
 ```bash
 [USER LOG] [ERROR] Error failed to execute capability: [2]Unknown: Gemini API error: 429 - {
@@ -332,19 +332,19 @@ If you are seeing the following error:
     "message": "You exceeded your current quota, please check your plan and billing details.
 ```
 
-Make sure to set up billing for your Gemini API key on the [Google AI Studio](https://aistudio.google.com/app/apikey)) dashboard. You will need to connect your credit card to activate billing, but no worries—the free tier is more than enough to complete this bootcamp.
+请在 [Google AI Studio](https://aistudio.google.com/app/apikey)) 控制台为你的 Gemini API key 开通计费。你需要绑定信用卡以启用计费，不过不必担心——免费额度足够完成本 bootcamp。
 
 ![gemini-billing](../assets/gemini-billing.png)
 
-## Summary
+## 小结
 
-You've learned:
-- ✅ How to make HTTP requests with CRE
-- ✅ How to handle secrets (API keys)
-- ✅ How consensus works for HTTP calls
-- ✅ How to use caching to prevent duplicates
-- ✅ How to parse and validate AI responses
+你已经学到：
+- ✅ 如何在 CRE 中发起 HTTP 请求
+- ✅ 如何处理 secrets（API keys）
+- ✅ HTTP 调用的共识如何工作
+- ✅ 如何使用缓存避免重复请求
+- ✅ 如何解析并校验 AI 响应
 
-## Next Steps
+## 下一步
 
-Now let's wire everything together into the complete settlement workflow!
+接下来把所有部分串起来，完成完整的结算 workflow！

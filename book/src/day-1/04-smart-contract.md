@@ -1,10 +1,10 @@
-# Smart Contract: PredictionMarket.sol
+# 智能合约：PredictionMarket.sol
 
-Now let's deploy the smart contract that our CRE workflow will interact with.
+现在让我们部署 CRE workflow 将要与之交互的智能合约。
 
-## How It Works
+## 工作原理
 
-Our prediction market supports four key actions:
+我们的预测市场支持四个关键操作：
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────┐
@@ -33,9 +33,9 @@ Our prediction market supports four key actions:
 └─────────────────────────────────────────────────────────────────────────┘
 ```
 
-## Building CRE-Compatible Contracts
+## 构建 CRE 兼容合约
 
-For a smart contract to receive data from CRE, it must implement the `IReceiver` interface. This interface defines a single `onReport()` function that the Chainlink `KeystoneForwarder` contract calls to deliver verified data.
+为了让智能合约能够接收来自 CRE 的数据，它必须实现 `IReceiver` 接口。该接口定义了一个 `onReport()` 函数，由 Chainlink `KeystoneForwarder` 合约调用以传递已验证的数据。
 
 ```js
 // SPDX-License-Identifier: MIT
@@ -55,20 +55,20 @@ interface IReceiver is IERC165 {
 }
 ```
 
-While you can implement `IReceiver` manually, we recommend using `ReceiverTemplate` - an abstract contract that handles boilerplate like ERC165 support, metadata decoding, and security checks (forwarder validation), letting you focus on your business logic in `_processReport()`.
+虽然你可以手动实现 `IReceiver`，我们建议使用 `ReceiverTemplate`——一个抽象合约，可处理 ERC165 支持、metadata 解码和安全检查（forwarder 验证）等样板代码，让你把精力放在 `_processReport()` 中的业务逻辑上。
 
-> The `MockKeystoneForwarder` contract, that we will use for simulations, on Ethereum Sepolia is located at: [https://sepolia.etherscan.io/address/0x15fc6ae953e024d975e77382eeec56a9101f9f88#code](https://sepolia.etherscan.io/address/0x15fc6ae953e024d975e77382eeec56a9101f9f88#code)
+> 用于模拟的 `MockKeystoneForwarder` 合约在 Ethereum Sepolia 上的地址见：[https://sepolia.etherscan.io/address/0x15fc6ae953e024d975e77382eeec56a9101f9f88#code](https://sepolia.etherscan.io/address/0x15fc6ae953e024d975e77382eeec56a9101f9f88#code)
 
-Here's how CRE delivers data to your contract:
+CRE 将数据投递到你的合约的方式如下：
 
-1. **CRE doesn't call your contract directly** - it submits a signed report to a Chainlink `KeystoneForwarder` contract
-2. **The forwarder validates signatures** - ensuring the report came from a trusted DON
-3. **The forwarder calls `onReport()`** - delivering the verified data to your contract
-4. **You decode and process** - extract the data from the report bytes
+1. **CRE 不会直接调用你的合约**——它会把已签名的 report 提交给 Chainlink `KeystoneForwarder` 合约
+2. **Forwarder 验证签名**——确保 report 来自受信任的 DON
+3. **Forwarder 调用 `onReport()`**——把已验证的数据投递到你的合约
+4. **你进行解码和处理**——从 report 字节中提取数据
 
-This two-step pattern (workflow → forwarder → your contract) ensures cryptographic verification of all data before it reaches your contract.
+这种两步模式（workflow → forwarder → 你的合约）确保所有数据在进入你的合约之前都经过密码学验证。
 
-## The Contract Code
+## 合约代码
 
 ```js
 // SPDX-License-Identifier: MIT
@@ -291,54 +291,58 @@ contract PredictionMarket is ReceiverTemplate {
 }
 ```
 
-## Key CRE Integration Points
+## 关键 CRE 集成点
 
-### 1. The `SettlementRequested` Event
+### 1. `SettlementRequested` 事件
 
 ```js
 event SettlementRequested(uint256 indexed marketId, string question);
 ```
 
-This event is what CRE's **Log Trigger** listens for. When emitted, CRE automatically runs the settlement workflow.
+该事件是 CRE **Log Trigger** 监听的对象。一旦被触发，CRE 会自动运行结算 workflow。
 
-### 2. The `onReport` Function
+### 2. `onReport` 函数
 
-The `ReceiverTemplate` base contract handles `onReport()` automatically, including security checks to ensure only the trusted Chainlink KeystoneForwarder can call it. Your contract only needs to implement `_processReport()` to handle the decoded report data.
+`ReceiverTemplate` 基类会自动处理 `onReport()`，包括安全检查，确保只有受信任的 Chainlink KeystoneForwarder 可以调用。你的合约只需实现 `_processReport()` 来处理解码后的 report 数据。
 
-CRE calls `onReport()` via the KeystoneForwarder to deliver settlement results. The `report` contains `(marketId, outcome, confidence)` ABI-encoded.
+CRE 通过 KeystoneForwarder 调用 `onReport()` 以投递结算结果。`report` 中包含经 ABI 编码的 `(marketId, outcome, confidence)`。
 
-## Setting Up the Foundry Project
+## 设置 Foundry 项目
 
-We'll create a new Foundry project for our smart contract. From your `prediction-market` directory:
+我们将为智能合约创建一个新的 Foundry 项目。在 `prediction-market` 目录下执行：
 
 ```bash
 # Create a new Foundry project
 forge init contracts
 ```
 
-You'll see:
+你会看到：
+
 ```bash
 Initializing forge project...
 Installing dependencies...
 Installed forge-std
 ```
 
-### Create the Contract Files
+### 创建合约文件
 
-1. **Create the interface directory:**
+1. **创建 interface 目录：**
+
 ```bash
 cd contracts
 mkdir -p src/interfaces
 ```
 
-2. **Install OpenZeppelin Contracts (required by ReceiverTemplate):**
+2. **安装 OpenZeppelin Contracts（ReceiverTemplate 需要）：**
+
 ```bash
 forge install OpenZeppelin/openzeppelin-contracts
 ```
 
-3. **Create the interface files:**
+3. **创建 interface 文件：**
 
-**Create `src/interfaces/IReceiver.sol`:**
+**创建 `src/interfaces/IReceiver.sol`：**
+
 ```js
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
@@ -350,9 +354,9 @@ interface IReceiver is IERC165 {
 }
 ```
 
-**Create `src/interfaces/ReceiverTemplate.sol`:**
+**创建 `src/interfaces/ReceiverTemplate.sol`：**
 
-The `ReceiverTemplate` provides forwarder address validation, optional workflow validation, ERC165 support, and metadata decoding utilities. Copy the full implementation:
+`ReceiverTemplate` 提供 forwarder 地址校验、可选的 workflow 校验、ERC165 支持以及 metadata 解码工具。请复制完整实现：
 
 ```js
 // SPDX-License-Identifier: MIT
@@ -599,7 +603,8 @@ abstract contract ReceiverTemplate is IReceiver, Ownable {
 }
 ```
 
-4. **Update `foundry.toml` to add OpenZeppelin remapping:**
+4. **更新 `foundry.toml`，添加 OpenZeppelin remapping：**
+
 ```toml
 [profile.default]
 src = "src"
@@ -610,11 +615,11 @@ remappings = [
 ]
 ```
 
-5. **Create `src/PredictionMarket.sol`** with the contract code shown above.
+5. **创建 `src/PredictionMarket.sol`**，内容使用上文展示的合约代码。
 
-### Project Structure
+### 项目结构
 
-Your complete project structure now includes both the CRE workflow and the Foundry contracts:
+完整的项目结构现在同时包含 CRE workflow 与 Foundry 合约：
 
 ```bash
 prediction-market/
@@ -637,20 +642,21 @@ prediction-market/
     └── test/                 # Tests (optional)
 ```
 
-### Compile the Contract
+### 编译合约
 
 ```bash
 forge build
 ```
 
-You should see:
+你应该看到：
+
 ```bash
 Compiler run successful!
 ```
 
-## Deploying the Contract
+## 部署合约
 
-We'll use the `.env` file we created earlier. Load the environment variables and deploy:
+我们将使用之前创建的 `.env` 文件。加载环境变量并部署：
 
 ```bash
 # From the contracts directory
@@ -665,24 +671,25 @@ forge create src/PredictionMarket.sol:PredictionMarket \
   --constructor-args 0x15fc6ae953e024d975e77382eeec56a9101f9f88
 ```
 
-> **Note**: The `source ../.env` command loads variables from the `.env` file in the `prediction-market` directory (parent of `contracts`).
+> **说明**：`source ../.env` 会从 `prediction-market` 目录（`contracts` 的父目录）中的 `.env` 文件加载变量。
 
-You'll see output like:
+你会看到类似输出：
+
 ```bash
 Deployer: 0x...
 Deployed to: 0x...   <-- Save this address!
 Transaction hash: 0x...
 ```
 
-## After Deployment
+## 部署之后
 
-**Save your contract address!** Update your CRE workflow config:
+**保存你的合约地址！** 更新 CRE workflow 配置：
 
 ```bash
 cd ../my-workflow
 ```
 
-Update `config.staging.json`:
+更新 `config.staging.json`：
 
 ```json
 {
@@ -697,14 +704,15 @@ Update `config.staging.json`:
 }
 ```
 
-We set `gasLimit` to `500000` for this example because that's sufficient, but other use cases may consume more gas.
+本示例将 `gasLimit` 设为 `500000`，因为对该场景足够；其他用例可能消耗更多 gas。
 
-> **Note**: We'll create markets via the HTTP trigger workflow in the next chapters. For now, you just need the contract deployed!
+> **说明**：我们将在后续章节通过 HTTP trigger workflow 创建市场。目前你只需要完成合约部署。
 
-## Summary
+## 小结
 
-You now have:
-- ✅ A deployed `PredictionMarket` contract on Sepolia
-- ✅ An event (`SettlementRequested`) that CRE can listen for
-- ✅ A function (`onReport`) that CRE can call with AI-determined results
-- ✅ Winner payout logic after settlement
+你现在拥有：
+
+- ✅ 已部署在 Sepolia 上的 `PredictionMarket` 合约
+- ✅ CRE 可以监听的 `SettlementRequested` 事件
+- ✅ CRE 可以用 AI 判定结果调用的 `onReport` 函数
+- ✅ 结算后的赢家领取逻辑

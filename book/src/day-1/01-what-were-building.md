@@ -1,18 +1,18 @@
-# What We're Building
+# 我们要构建什么
 
-## The Use Case: AI-Powered Prediction Markets
+## 用例：AI 驱动的预测市场
 
-We're building an **AI-Powered Onchain Prediction Market** - a complete system where:
+我们要构建一个 **AI 驱动的链上预测市场** —— 一套完整系统，其中：
 
-1. **Onchain Markets are created** via HTTP-triggered CRE workflows
-2. **Users make predictions** by staking ETH on Yes or No
-3. **Users can request settlement** for any market
-4. **CRE automatically detects** settlement requests via Log Triggers
-5. **Google Gemini AI** determines the market outcome
-6. **CRE writes** the verified outcome back onchain
-7. **Winners claim** their share of the total pool → `Your stake * (Total Pool / Winning Pool)`
+1. 通过 **HTTP 触发的 CRE workflow** **在链上创建市场**
+2. **用户在 Yes 或 No 上质押 ETH** 进行预测
+3. **用户可以请求结算** 任意市场
+4. **CRE 通过 Log Trigger 自动检测** 结算请求
+5. **Google Gemini AI** 判定市场结果
+6. **CRE 将** 已验证的结果 **写回链上**
+7. **获胜者领取** 总奖池中的份额 → `Your stake * (Total Pool / Winning Pool)`
 
-## Architecture Overview
+## 架构概览
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
@@ -38,44 +38,44 @@ We're building an **AI-Powered Onchain Prediction Market** - a complete system w
 └─────────────────────────────────────────────────────────────────┘
 ```
 
-## Learning Objectives
+## 学习目标
 
-After completing this bootcamp, you will be able to:
+完成本训练营后，你将能够：
 
-- ✅ **Explain** what CRE is and when to use it
-- ✅ **Develop and simulate** CRE workflows in TypeScript
-- ✅ **Use** all CRE triggers (CRON, HTTP, Log) and capabilities (HTTP, EVM Read, EVM Write)
-- ✅ **Connect** AI services to smart contracts through verifiable workflows
-- ✅ **Build** smart contracts compatible with CRE's chain write capability
+- ✅ **说明** CRE 是什么以及何时使用它
+- ✅ **用 TypeScript 开发与模拟** CRE workflow
+- ✅ **使用** 全部 CRE trigger（CRON、HTTP、Log）与 Capability（HTTP、EVM Read、EVM Write）
+- ✅ **通过可验证的 workflow** 将 AI 服务与智能合约连接起来
+- ✅ **编写** 与 CRE 链上写入能力兼容的智能合约
 
-## What You'll Learn
+## 你将学到什么
 
-### Day 1: Foundations + Market Creation
+### Day 1：基础 + 市场创建
 
-| Topic | What You'll Learn |
+| 主题 | 你将学到 |
 |-------|-------------------|
-| CRE CLI Setup | Install tools, create account, verify setup |
-| CRE Mental Model | What CRE is, Workflows, Capabilities, DONs |
-| Project Setup | `cre init`, project structure, first simulation |
-| Smart Contract | Develop PredictionMarket.sol  |
-| HTTP Trigger | Receive external HTTP requests |
-| EVM Write | Write data to the blockchain |
+| CRE CLI 配置 | 安装工具、创建账户、验证环境 |
+| CRE 基础概念 | CRE 是什么、Workflow、Capability、DON |
+| 项目搭建 | `cre init`、项目结构、首次模拟 |
+| 智能合约 | 开发 PredictionMarket.sol  |
+| HTTP Trigger | 接收外部 HTTP 请求 |
+| EVM Write | 向区块链写入数据 |
 
-**End of Day 1**: You'll create markets on-chain via HTTP requests!
+**Day 1 结束时**：你将能通过 HTTP 请求在链上创建市场！
 
-### Day 2: Complete Settlement Workflow
+### Day 2：完整结算 Workflow
 
-| Topic | What You'll Learn |
+| 主题 | 你将学到 |
 |-------|-------------------|
-| Log Trigger | React to on-chain events |
-| EVM Read | Read state from smart contracts |
-| AI Integration | Call Gemini API with consensus |
-| Making Predictions | Place bets on markets with ETH |
-| Complete Flow | Wire everything, settle, claim winnings |
+| Log Trigger | 响应链上事件 |
+| EVM Read | 从智能合约读取状态 |
+| AI 集成 | 在共识机制下调用 Gemini API |
+| 进行预测 | 用 ETH 在市场上下注 |
+| 完整流程 | 串联一切、结算、领取奖励 |
 
-**End of Day 2**: Full AI-powered settlement working end-to-end!
+**Day 2 结束时**：端到端的 AI 驱动结算全部跑通！
 
 
-## 🎬 Demo Time!
+## 🎬 演示时间！
 
-Before we dive into building, let's see the end result in action.
+在动手搭建之前，我们先看看最终效果实际运行起来是什么样。

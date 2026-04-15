@@ -1,16 +1,16 @@
-# CRE Project Setup
+# CRE 项目搭建
 
-Let's create your first CRE project from scratch using the CLI.
+我们用 CLI 从零创建你的第一个 CRE 项目。
 
-## Step 1: Initialize Your Project
+## 步骤 1：初始化项目
 
-Open your terminal and run:
+打开终端并运行：
 
 ```bash
 cre init
 ```
 
-You'll see the CRE initialization wizard:
+你会看到 CRE 初始化向导：
 
 ```bash
 🔗 Welcome to CRE!
@@ -18,7 +18,7 @@ You'll see the CRE initialization wizard:
 ✔ Project name? [my-project]:
 ```
 
-**Type:** `prediction-market` and press Enter.
+**输入：** `prediction-market` 然后按回车。
 
 ```bash
 ? What language do you want to use?: 
@@ -26,7 +26,7 @@ You'll see the CRE initialization wizard:
     Typescript
 ```
 
-**Select:** `Typescript` using arrow keys and press Enter.
+**选择：** 用方向键选中 `Typescript` 后按回车。
 
 ```bash
 ✔ Typescript
@@ -37,13 +37,13 @@ Use the arrow keys to navigate: ↓ ↑ → ←
     Confidential Http: Typescript example using the confidential http capability
 ```
 
-**Select:** `Helloworld` and press Enter.
+**选择：** `Helloworld` 后按回车。
 
 ```bash
 ✔ Workflow name? [my-workflow]:
 ```
 
-**Press Enter** to accept the default `my-workflow`.
+**直接按回车** 接受默认的 `my-workflow`。
 
 ```bash
 🎉 Project created successfully!
@@ -54,16 +54,16 @@ Next steps:
   cre workflow simulate my-workflow
 ```
 
-## Step 2: Navigate and Install Dependencies
+## 步骤 2：进入目录并安装依赖
 
-Follow the instructions from the CLI:
+按 CLI 给出的说明操作：
 
 ```bash
 cd prediction-market
 bun install --cwd ./my-workflow
 ```
 
-You'll see Bun installing the CRE SDK and dependencies:
+你会看到 Bun 正在安装 CRE SDK 与依赖：
 
 ```bash
 $ bunx cre-setup
@@ -76,9 +76,9 @@ $ bunx cre-setup
 30 packages installed [5.50s]
 ```
 
-## Step 2.5: Set Up Environment Variables
+## 步骤 2.5：配置环境变量
 
-The `cre init` command creates a `.env` file in the project root. This file will be used by both CRE workflows and Foundry (for smart contract deployment). Let's configure it:
+`cre init` 会在项目根目录生成 `.env` 文件。该文件会同时被 CRE workflow 与 Foundry（智能合约部署）使用。我们来配置它：
 
 ```bash
 ###############################################################################
@@ -97,22 +97,22 @@ CRE_TARGET=staging-settings
 GEMINI_API_KEY_VAR=YOUR_GEMINI_API_KEY_HERE
 ```
 
-> ⚠️ **Security Warning**: Never commit your `.env` file or share your private keys! The `.gitignore` file already excludes `.env` files.
+> ⚠️ **安全提示**：切勿提交 `.env` 或分享私钥！`.gitignore` 已默认排除 `.env` 文件。
 
 
-Replace the placeholder values:
-- `YOUR_PRIVATE_KEY_HERE`: Your Ethereum private key (with `0x` prefix)
-- `YOUR_GEMINI_API_KEY_HERE`: Your Google Gemini API key (get one from [Google AI Studio](https://aistudio.google.com/app/apikey))
+将占位符替换为实际值：
+- `YOUR_PRIVATE_KEY_HERE`：你的 Ethereum 私钥（带 `0x` 前缀）
+- `YOUR_GEMINI_API_KEY_HERE`：你的 Google Gemini API 密钥（在 [Google AI Studio](https://aistudio.google.com/app/apikey) 获取）
 
-**Note about Gemini API key**
+**关于 Gemini API 密钥**
 
-Make sure to set up billing for your Gemini API key on the Google AI Studio dashboard to avoid getting the `Gemini API error: 429` later. You will need to connect your credit card to activate billing, but no worries - the free tier is more than enough to complete this bootcamp.
+请在 Google AI Studio 控制台为 Gemini API 密钥开通计费，以免后续出现 `Gemini API error: 429`。需要绑定信用卡以启用计费，不必担心——免费额度足够完成本训练营。
 
 ![gemini-billing](../assets/gemini-billing.png)
 
-## Step 3: Explore the Project Structure
+## 步骤 3：浏览项目结构
 
-Let's see what `cre init` created for us:
+看看 `cre init` 为我们生成了什么：
 
 ```bash
 prediction-market/
@@ -127,26 +127,26 @@ prediction-market/
     └── tsconfig.json       # TypeScript configuration
 ```
 
-### Key Files Explained
+### 关键文件说明
 
-| File | Purpose |
+| 文件 | 用途 |
 |------|---------|
-| `project.yaml` | RPC endpoints for blockchain access |
-| `secrets.yaml` | Maps environment variables to secrets |
-| `.env` | Environment variables for CRE and Foundry |
-| `workflow.yaml` | Workflow name and file paths |
-| `main.ts` | Your workflow code lives here |
-| `config.staging.json` | Configuration values for simulation |
+| `project.yaml` | 访问区块链用的 RPC 端点 |
+| `secrets.yaml` | 将环境变量映射到密钥 |
+| `.env` | CRE 与 Foundry 的环境变量 |
+| `workflow.yaml` | Workflow 名称与文件路径 |
+| `main.ts` | 你的 workflow 代码在这里 |
+| `config.staging.json` | 模拟运行用的配置值 |
 
-## Step 4: Run Your First Simulation
+## 步骤 4：运行第一次模拟
 
-Now for the exciting part - let's simulate the workflow:
+激动人心的部分来了——我们来模拟 workflow：
 
 ```bash
 cre workflow simulate my-workflow
 ```
 
-You'll see the simulator initialize:
+你会看到模拟器初始化：
 
 ```bash
 [SIMULATION] Simulator Initialized
@@ -160,11 +160,11 @@ Workflow Simulation Result:
 [SIMULATION] Execution finished signal received
 ```
 
-🎉 **Congratulations!** You just ran your first CRE workflow!
+🎉 **恭喜！** 你已经跑通了第一个 CRE workflow！
 
-## Step 5: Understand the Hello World Code
+## 步骤 5：理解 Hello World 代码
 
-Let's look at what's inside `my-workflow/main.ts`:
+看看 `my-workflow/main.ts` 里有什么：
 
 ```typescript
 // my-workflow/main.ts
@@ -201,23 +201,23 @@ export async function main() {
 main();
 ```
 
-### The Pattern: Trigger → Callback
+### 模式：Trigger → Callback
 
-Every CRE workflow follows this pattern:
+每个 CRE workflow 都遵循这一模式：
 
 ```ts
 cre.handler(trigger, callback)
 ```
 
-- **Trigger**: What starts the workflow (CRON, HTTP, Log)
-- **Callback**: What happens when the trigger fires
+- **Trigger**：启动 workflow 的条件（CRON、HTTP、Log）
+- **Callback**：trigger 触发时执行的逻辑
 
-> **Note**: The Hello World uses a CRON Trigger (time-based). In this bootcamp, we'll build with **HTTP Trigger** (Day 1) and **Log Trigger** (Day 2) for our prediction market.
+> **说明**：Hello World 使用 CRON Trigger（基于时间）。在本训练营中，我们会为预测市场使用 **HTTP Trigger**（Day 1）和 **Log Trigger**（Day 2）。
 
-## Key Commands Reference
+## 常用命令速查
 
-| Command | What It Does |
+| 命令 | 作用 |
 |---------|--------------|
-| `cre init` | Creates a new CRE project |
-| `cre workflow simulate <name>` | Simulates a workflow locally |
-| `cre workflow simulate <name> --broadcast` | Simulates with real on-chain writes |
+| `cre init` | 创建新的 CRE 项目 |
+| `cre workflow simulate <name>` | 在本地模拟 workflow |
+| `cre workflow simulate <name> --broadcast` | 模拟并执行真实链上写入 |

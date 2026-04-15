@@ -1,12 +1,12 @@
-# EVM Read: Reading Contract State
+# EVM Read：读取合约状态
 
-Before we can settle a market with AI, we need to read its details from the blockchain. Let's learn the **EVM Read** capability.
+在用 AI 结算市场之前，我们需要从区块链读取市场详情。下面学习 **EVM Read** capability。
 
-## Familiarize yourself with the capability
+## 熟悉该 capability
 
-The **EVM Read** capability (`callContract`) allows you to call `view` and `pure` functions on smart contracts. All reads happen across multiple DON nodes and are verified via consensus, protecting against faulty RPC endpoints, stale data, or malicious responses.
+**EVM Read** capability（`callContract`）允许你调用智能合约上的 `view` 与 `pure` 函数。所有读取会在多个 DON 节点上执行，并通过共识校验，从而降低错误 RPC、陈旧数据或恶意响应的风险。
 
-### The read pattern
+### 读取模式
 
 ```typescript
 import { cre, getNetwork, encodeCallMsg, LAST_FINALIZED_BLOCK_NUMBER, bytesToHex } from "@chainlink/cre-sdk";
@@ -47,39 +47,39 @@ const decodedValue = decodeFunctionResult({
 });
 ```
 
-### Block number options
+### 区块号选项
 
-| Value | Description |
+| 值 | 说明 |
 |-------|-------------|
-| `LAST_FINALIZED_BLOCK_NUMBER` | Latest finalized block (safest, recommended) |
-| `LATEST_BLOCK_NUMBER` | Very latest block |
-| `blockNumber(n)` | Specific block number for historical queries |
+| `LAST_FINALIZED_BLOCK_NUMBER` | 最新 finalized 区块（最安全，推荐） |
+| `LATEST_BLOCK_NUMBER` | 最新区块 |
+| `blockNumber(n)` | 指定区块号，用于历史查询 |
 
-### Why `zeroAddress` for `from`?
+### 为什么 `from` 使用 `zeroAddress`？
 
-For read operations, the `from` address doesn't matter because no transaction is sent, no gas is consumed, and no state is modified.
+对于读取操作，`from` 地址并不重要：不会发送交易、不消耗 gas、也不修改状态。
 
-### A note on Go bindings
+### 关于 Go bindings 的说明
 
-The **Go SDK** requires you to generate type-safe bindings from your contract's ABI before interacting with it:
+**Go SDK** 要求你先从合约 ABI 生成类型安全的 bindings，再与之交互：
 
 ```bash
 cre generate-bindings evm
 ```
 
-This one-time step creates helper methods for reads, writes, and event decoding - no manual ABI definitions needed.
+这是一次性步骤，会创建用于 read、write 与事件解码的辅助方法，无需手写 ABI 定义。
 
-## Reading Market Data
+## 读取市场数据
 
-Our contract has a `getMarket` function:
+我们的合约有一个 `getMarket` 函数：
 
 ```solidity
 function getMarket(uint256 marketId) external view returns (Market memory);
 ```
 
-Let's call it from CRE.
+下面从 CRE 调用它。
 
-### Step 1: Define the ABI
+### 步骤 1：定义 ABI
 
 ```typescript
 const GET_MARKET_ABI = [
@@ -109,9 +109,9 @@ const GET_MARKET_ABI = [
 ] as const;
 ```
 
-### Step 2: Update the `logCallback.ts` file
+### 步骤 2：更新 `logCallback.ts` 文件
 
-Now let's update `my-workflow/logCallback.ts` to add EVM Read functionality:
+现在更新 `my-workflow/logCallback.ts`，加入 EVM Read 功能：
 
 ```typescript
 // prediction-market/my-workflow/logCallback.ts
@@ -251,18 +251,18 @@ export function onLogTrigger(runtime: Runtime<Config>, log: EVMLog): string {
 }
 ```
 
-## Simulating an EVM Read via Log Trigger
+## 通过 Log Trigger 模拟 EVM Read
 
-Now let's repeat the same process from the previous chapter and run the CRE simulation once again
+现在重复上一章的流程，再次运行 CRE simulation。
 
-### 1. Run the simulation
+### 1. 运行 simulation
 
 ```bash
 # From the prediction-market directory
 cre workflow simulate my-workflow
 ```
 
-### 2. Select Log Trigger
+### 2. 选择 Log Trigger
 
 ```bash
 🚀 Workflow simulation ready. Please select a trigger:
@@ -272,7 +272,7 @@ cre workflow simulate my-workflow
 Enter your choice (1-2): 2
 ```
 
-### 3. Enter the transaction details
+### 3. 输入交易详情
 
 ```bash
 🔗 EVM Trigger Configuration:
@@ -280,17 +280,17 @@ Please provide the transaction hash and event index for the EVM log event.
 Enter transaction hash (0x...):
 ```
 
-Paste the transaction hash you previously saved (from the `requestSettlement` function call).
+粘贴你之前保存的交易哈希（来自 `requestSettlement` 调用）。
 
-### 4. Enter event index
+### 4. 输入 event index
 
 ```bash
 Enter event index (0-based): 0
 ```
 
-Enter **0**.
+输入 **0**。
 
-### Expected Output
+### 预期输出
 
 ```bash
 [SIMULATION] Running trigger trigger=evm:ChainSelector:16015286601757825753@1.0.0
@@ -307,22 +307,24 @@ Workflow Simulation Result:
 [SIMULATION] Execution finished signal received
 ```
 
-### Consensus on Reads
+### 读取上的共识
 
-Even read operations run across multiple DON nodes:
-1. Each node reads the data
-2. Results are compared
-3. BFT Consensus is reached
-4. Single verified result returned
+即使是读取操作，也会在多个 DON 节点上执行：
 
-## Summary
+1. 每个节点读取数据
+2. 比对结果
+3. 达成 BFT Consensus
+4. 返回单一已验证结果
 
-You've learned:
-- ✅ How to encode function calls with Viem
-- ✅ How to use `callContract` for reads
-- ✅ How to decode the results
-- ✅ Reading with consensus verification
+## 小结
 
-## Next Steps
+你已经学会：
 
-Now let's call Gemini AI to determine the market outcome!
+- ✅ 如何用 Viem 编码函数调用
+- ✅ 如何用 `callContract` 进行读取
+- ✅ 如何解码返回值
+- ✅ 如何在共识校验下进行读取
+
+## 下一步
+
+接下来调用 Gemini AI 来判断市场结果！
