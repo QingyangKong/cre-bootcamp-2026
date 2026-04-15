@@ -1,142 +1,91 @@
 # 回顾与答疑
 
-欢迎回到 Day 2！让我们回顾昨天学到的内容，并解答一些常见问题。
+欢迎来到第 2 天的课程！让我们回顾昨天学到的内容，并解答一些常见问题。
 
-## Day 1 回顾
+## 第 1 天回顾
 
-### 我们构建的内容
+### 我们学到的内容
 
-昨天，我们构建了一个**市场创建工作流**：
-
-```
-HTTP Request ──▶ CRE Workflow ──▶ PredictionMarket.sol
-(question)       (HTTP Trigger)   (createMarket)
-```
-
-### 涵盖的关键概念
+昨天，我们建立了 CRE 的基础知识：
 
 | 概念 | 我们学到的内容 |
 |---------|-----------------|
-| **CRE Mental Model** | Workflows、Triggers、Capabilities、DONs |
-| **项目结构** | project.yaml、workflow.yaml、config.json |
-| **HTTP Trigger** | 接收外部 HTTP 请求 |
-| **EVM Write** | 两步模式（report → writeReport） |
+| **CRE 思维模型** | Workflow、Trigger、Capability、DON |
+| **项目搭建** | `cre init`、项目结构、首次模拟 |
+| **Trigger-Callback 模式** | 每个 CRE workflow 的核心架构模式 |
 
-### 两步写入模式
+### 核心概念回顾
 
-这是 Day 1 中最重要的模式：
+#### Workflow、Trigger 与 Capability
+
+```
+Trigger 触发 ──▶ Workflow 运行 ──▶ 调用 Capability
+（CRON/HTTP/Log）   （你的业务逻辑）   （HTTP/EVM Read/EVM Write）
+```
+
+- **Workflow**：你的自动化逻辑，编译为 WASM，在 DON 上执行
+- **Trigger**：启动 workflow 的事件（CRON、HTTP、Log）
+- **Capability**：执行具体任务的微服务（HTTP、EVM Read、EVM Write）
+- **DON**：通过 BFT 共识执行并验证结果的去中心化节点网络
+
+#### Trigger-Callback 模式
 
 ```typescript
-// Step 1: Encode and sign the data
-const reportResponse = runtime
-  .report({
-    encodedPayload: hexToBase64(reportData),
-    encoderName: "evm",
-    signingAlgo: "ecdsa",
-    hashingAlgo: "keccak256",
-  })
-  .result();
-
-// Step 2: Write to the contract
-const writeResult = evmClient
-  .writeReport(runtime, {
-    receiver: contractAddress,
-    report: reportResponse,
-    gasConfig: { gasLimit: "500000" },
-  })
-  .result();
+cre.handler(
+  trigger,    // 何时执行（CRON、HTTP、Log）
+  callback    // 执行什么（你的逻辑）
+)
 ```
 
 ## 今日内容
 
-今天我们将完成预测市场，内容包括：
+今天我们将在第 1 天的基础上，部署智能合约并学习如何通过 CRE workflow 与区块链交互：
 
-1. **Log Trigger** — 响应链上事件
-2. **EVM Read** — 从智能合约读取状态
-3. **HTTP Capability** — 调用 Gemini AI
-4. **Complete Flow** — 将所有部分串联起来
+1. **智能合约** — 开发并部署 PredictionMarket.sol
+2. **HTTP Trigger** — 通过 HTTP 请求启动 workflow
+3. **EVM Write** — 将数据写入链上智能合约
 
 ### 架构
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│                      Day 2: Market Settlement                   │
+│                   Day 2: Market Creation                        │
 │                                                                 │
-│   requestSettlement() ──▶ SettlementRequested Event             │
-│                                   │                             │
-│                                   ▼                             │
-│                           CRE Log Trigger                       │
-│                                   │                             │
-│                    ┌──────────────┼───────────────────┐         │
-│                    ▼              ▼                   ▼         │
-│              EVM Read         Gemini AI           EVM Write     │
-│           (market data)   (determine outcome)  (settle market)  │
-│                                                                 │
+│   HTTP Request ──▶ CRE Workflow ──▶ PredictionMarket.sol        │
+│   (question)       (HTTP Trigger)   (createMarket)              │
 └─────────────────────────────────────────────────────────────────┘
 ```
 
-## Day 1 常见问题
+## 第 1 天常见问题
 
-### 问：为什么需要两步写入模式？
+### 问：CRE workflow 在哪里运行？
 
-**答：**两步模式提供：
+**答：**CRE workflow 被编译为 WASM，在去中心化预言机网络（DON）上运行。每个节点独立执行你的代码，然后通过 BFT 共识协议对比结果，返回一个经过验证的结果。
 
-- **安全性**：报告由 DON 加密签名
-- **可验证性**：合约可以验证签名来自 CRE
-- **共识**：多个节点在签名前就数据达成一致
+### 问：simulation 和实际部署有什么区别？
 
-### 问：如果交易失败怎么办？
+**答：**
+- `cre workflow simulate` — 在本地模拟执行，默认不上链
+- `cre workflow simulate --broadcast` — 模拟执行并**真正广播**交易到区块链
+- 生产部署需要申请 Early Access
+
+### 问：如果 `cre init` 或 `cre workflow simulate` 报错怎么办？
 
 **答：**请检查：
-
-1. 钱包中有足够的 ETH 支付 gas
-2. 合约地址正确
-3. gas limit 足够
-4. 合约函数接受编码后的数据
-
-### 问：如何调试 workflow 问题？
-
-**答：**多使用 `runtime.log()`：
-
-```typescript
-runtime.log(`[DEBUG] Value: ${JSON.stringify(data)}`);
-```
-
-所有日志都会出现在 simulation 输出中。
-
-### 问：一个 workflow 里可以有多个 trigger 吗？
-
-**答：**可以！这正是今天要做的事。一个 workflow 最多可以有 10 个 trigger。
-
-```typescript
-const initWorkflow = (config: Config) => {
-  return [
-    cre.handler(httpTrigger, onHttpTrigger),
-    cre.handler(logTrigger, onLogTrigger),
-  ];
-};
-```
+1. `cre whoami` 确认已登录
+2. `.env` 文件在 `prediction-market` 目录下且私钥正确
+3. `bun install --cwd ./my-workflow` 已成功安装依赖
+4. 当前工作目录是 `prediction-market`（而非 `my-workflow`）
 
 ## 快速环境检查
 
 在继续之前，先确认环境已就绪：
 
 ```bash
-# Check CRE authentication
+# 检查 CRE 认证状态
 cre whoami
-
-# From the prediction-market directory
-source .env
-
-export MARKET_ADDRESS=0xYOUR_CONTRACT_ADDRESS
-
-# Verify you have markets created (decoded output)
-cast call $MARKET_ADDRESS \
-  "getMarket(uint256) returns ((address,uint48,uint48,bool,uint16,uint8,uint256,uint256,string))" \
-  0 \
-  --rpc-url "https://ethereum-sepolia-rpc.publicnode.com"
 ```
 
-## 准备好开始 Day 2！
+## 准备好开始第 2 天课程！
 
-接下来深入学习 Log Trigger，并构建 settlement workflow。
+接下来我们将部署智能合约，并学习 HTTP Trigger 和 EVM Write，实现通过 HTTP 请求在链上创建预测市场。

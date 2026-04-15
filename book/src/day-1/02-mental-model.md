@@ -25,7 +25,7 @@ CRE 通过提供**可验证的运行时**来弥合这一差距，你可以在其
 
 ## 核心概念
 
-### 1. Workflow
+### 1. Workflow（工作流）
 
 **Workflow**是你开发的链下代码，用 TypeScript 或 Go 编写。CRE 将其编译为 WebAssembly（WASM），并在去中心化预言机网络（DON）上运行。
 
@@ -38,7 +38,7 @@ const initWorkflow = (config: Config) => {
 }
 ```
 
-### 2. Trigger
+### 2. Trigger（触发器）
 
 **Trigger**是启动 workflow 的事件。CRE 支持三种类型：
 
@@ -48,7 +48,7 @@ const initWorkflow = (config: Config) => {
 | **HTTP** | 收到 HTTP 请求时 | 「API 被调用时创建市场」 |
 | **Log** | 智能合约发出事件时 | 「SettlementRequested 触发时结算」 |
 
-### 3. Capability
+### 3. Capability（能力）
 
 **Capability**是 workflow **能做什么**—— 执行具体任务的微服务：
 
