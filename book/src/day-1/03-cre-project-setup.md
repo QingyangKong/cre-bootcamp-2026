@@ -212,7 +212,7 @@ cre.handler(trigger, callback)
 - **Trigger**：启动 workflow 的条件（CRON、HTTP、Log）
 - **Callback**：trigger 触发时执行的逻辑
 
-> **说明**：Hello World 使用 CRON Trigger（基于时间）。在本训练营中，我们会为预测市场使用**HTTP Trigger**（Day 1）和**Log Trigger**（Day 2）。
+> **说明**：Hello World 使用 CRON Trigger（基于时间）。在本训练营中，我们会为预测市场使用**HTTP Trigger**（Day 2）和**Log Trigger**（Day 3）。
 
 ## 常用命令速查
 

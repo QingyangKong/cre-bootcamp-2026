@@ -6,7 +6,7 @@
 
 ### 我们构建的内容
 
-昨天，我们构建了一个**市场创建工作流**：
+昨天，我们部署了智能合约并构建了一个**市场创建工作流**：
 
 ```
 HTTP Request ──▶ CRE Workflow ──▶ PredictionMarket.sol
@@ -17,8 +17,7 @@ HTTP Request ──▶ CRE Workflow ──▶ PredictionMarket.sol
 
 | 概念 | 我们学到的内容 |
 |---------|-----------------|
-| **CRE Mental Model** | Workflows、Triggers、Capabilities、DONs |
-| **项目结构** | project.yaml、workflow.yaml、config.json |
+| **智能合约** | 部署 PredictionMarket.sol 到 Sepolia |
 | **HTTP Trigger** | 接收外部 HTTP 请求 |
 | **EVM Write** | 两步模式（report → writeReport） |
 
@@ -75,7 +74,7 @@ const writeResult = evmClient
 └─────────────────────────────────────────────────────────────────┘
 ```
 
-## Day 1 常见问题
+## 第 2 天课程常见问题
 
 ### 问：为什么需要两步写入模式？
 
