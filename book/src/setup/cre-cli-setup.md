@@ -12,7 +12,7 @@
 
 ## 步骤 2：安装 CRE CLI
 
-**CRE CLI** 是编译和模拟 workflow 的必备工具。它将你的 TypeScript 代码编译为 WebAssembly (WASM) 二进制文件，并允许你在部署前在本地测试 workflow。
+**CRE CLI**是编译和模拟 workflow 的必备工具。它将你的 TypeScript 代码编译为 WebAssembly (WASM) 二进制文件，并允许你在部署前在本地测试 workflow。
 
 ### 方式 1：自动安装
 

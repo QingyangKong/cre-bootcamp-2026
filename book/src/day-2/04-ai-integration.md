@@ -96,7 +96,7 @@ cacheSettings: {
 └─────────────────────────────────────────────────────────────────┘
 ```
 
-**结果**：实际只发出 **一次** HTTP 调用，同时所有节点仍参与共识。
+**结果**：实际只发出**一次** HTTP 调用，同时所有节点仍参与共识。
 
 > **最佳实践**：对所有 POST、PUT、PATCH、DELETE 请求使用 `cacheSettings`，以避免重复请求。
 
@@ -105,7 +105,7 @@ cacheSettings: {
 Secrets 是受安全管理的凭据（API key、token 等），在运行时提供给 workflow。在 CRE 中：
 
 - **在 simulation 中**：Secrets 在 `secrets.yaml` 中映射为来自 `.env` 的环境变量
-- **在生产环境中**：Secrets 存储在去中心化的 **Vault DON** 中
+- **在生产环境中**：Secrets 存储在去中心化的**Vault DON**中
 
 在 workflow 中获取 secret：
 

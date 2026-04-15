@@ -299,7 +299,7 @@ contract PredictionMarket is ReceiverTemplate {
 event SettlementRequested(uint256 indexed marketId, string question);
 ```
 
-该事件是 CRE **Log Trigger** 监听的对象。一旦被触发，CRE 会自动运行结算 workflow。
+该事件是 CRE**Log Trigger**监听的对象。一旦被触发，CRE 会自动运行结算 workflow。
 
 ### 2. `onReport` 函数
 
@@ -683,7 +683,7 @@ Transaction hash: 0x...
 
 ## 部署之后
 
-**保存你的合约地址！** 更新 CRE workflow 配置：
+**保存你的合约地址！**更新 CRE workflow 配置：
 
 ```bash
 cd ../my-workflow

@@ -2,16 +2,16 @@
 
 ![banner](../assets/banner.png)
 
-欢迎参加 **CRE Bootcamp：构建 AI 驱动的预测市场**！
+欢迎参加**CRE Bootcamp：构建 AI 驱动的预测市场**！
 
 这是一个为期两天的实操训练营，旨在为你提供深入的、以开发者为中心的 Chainlink Runtime Environment (CRE) 构建指南。
 
 ## 🎤 讲师介绍
 
 ### Frank Kong
-**DevRel Engineer, Chainlink Labs**
+**开发者关系工程师, Chainlink Labs**
 
-![img](../assets/Frank.png)
+<img src="../assets/Frank.png" alt="img" width="200">
 
 X (Twitter): [@AlongHudson](https://x.com/AlongHudson)
 

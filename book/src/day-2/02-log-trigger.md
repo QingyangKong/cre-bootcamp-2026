@@ -4,7 +4,7 @@
 
 ## 熟悉该 capability
 
-**EVM Log Trigger** 在智能合约发出特定事件时触发。你可以通过调用 `EVMClient.logTrigger()` 并传入配置来创建 Log Trigger，配置中指定要监听的合约地址和事件 topic。
+**EVM Log Trigger**在智能合约发出特定事件时触发。你可以通过调用 `EVMClient.logTrigger()` 并传入配置来创建 Log Trigger，配置中指定要监听的合约地址和事件 topic。
 
 这很有用，因为：
 
@@ -256,7 +256,7 @@ Enter transaction hash (0x...):
 Enter event index (0-based): 0
 ```
 
-输入 **0**。
+输入**0**。
 
 ### 预期输出
 
@@ -273,7 +273,7 @@ Workflow Simulation Result:
 
 ## 要点回顾
 
-- **Log Trigger** 会自动响应链上事件
+- **Log Trigger**会自动响应链上事件
 - 使用 `keccak256(toHex("EventName(types)"))` 计算事件哈希
 - 使用 Viem 的 `decodeEventLog` 解码事件
 - 测试流程：先在链上触发事件，再用 tx hash 进行 simulation

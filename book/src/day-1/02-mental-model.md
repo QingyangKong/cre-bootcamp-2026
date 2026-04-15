@@ -4,7 +4,7 @@
 
 ## CRE 是什么？
 
-**Chainlink Runtime Environment（CRE）** 是一个编排层，让你可以用 TypeScript 或 Golang 编写智能合约并运行自己的 workflow，由 Chainlink 去中心化预言机网络（DON）驱动。借助 CRE，你可以将不同能力（例如 HTTP、链上读写、签名、共识）组合成可验证的 workflow，把智能合约连接到 API、云服务、AI 系统、其他区块链等。这些 workflow 在 DON 上执行，并内置共识，作为安全、抗篡改且高可用的运行时。
+**Chainlink Runtime Environment（CRE）**是一个编排层，让你可以用 TypeScript 或 Golang 编写智能合约并运行自己的 workflow，由 Chainlink 去中心化预言机网络（DON）驱动。借助 CRE，你可以将不同能力（例如 HTTP、链上读写、签名、共识）组合成可验证的 workflow，把智能合约连接到 API、云服务、AI 系统、其他区块链等。这些 workflow 在 DON 上执行，并内置共识，作为安全、抗篡改且高可用的运行时。
 
 ### CRE 要解决的问题
 
@@ -14,20 +14,20 @@
 - ❌ 无法调用 AI 模型
 - ❌ 无法读取其他区块链
 
-CRE 通过提供 **可验证的运行时** 来弥合这一差距，你可以在其中：
+CRE 通过提供**可验证的运行时**来弥合这一差距，你可以在其中：
 
 - ✅ 从任意 API 获取数据
 - ✅ 从多条区块链读取
 - ✅ 调用 AI 服务
 - ✅ 将已验证结果写回链上
 
-并且全程由 **密码学共识** 保证每一步操作都经过验证。
+并且全程由**密码学共识**保证每一步操作都经过验证。
 
 ## 核心概念
 
 ### 1. Workflow
 
-**Workflow** 是你开发的链下代码，用 TypeScript 或 Go 编写。CRE 将其编译为 WebAssembly（WASM），并在去中心化预言机网络（DON）上运行。
+**Workflow**是你开发的链下代码，用 TypeScript 或 Go 编写。CRE 将其编译为 WebAssembly（WASM），并在去中心化预言机网络（DON）上运行。
 
 ```typescript
 // A workflow is just a TypeScript or Go code!
@@ -40,7 +40,7 @@ const initWorkflow = (config: Config) => {
 
 ### 2. Trigger
 
-**Trigger** 是启动 workflow 的事件。CRE 支持三种类型：
+**Trigger**是启动 workflow 的事件。CRE 支持三种类型：
 
 | Trigger | 何时触发 | 例子 |
 |---------|---------------|----------|
@@ -50,7 +50,7 @@ const initWorkflow = (config: Config) => {
 
 ### 3. Capability
 
-**Capability** 是 workflow **能做什么** —— 执行具体任务的微服务：
+**Capability**是 workflow **能做什么**—— 执行具体任务的微服务：
 
 | Capability | 作用 |
 |------------|--------------|
@@ -62,7 +62,7 @@ const initWorkflow = (config: Config) => {
 
 ### 4. 去中心化预言机网络（DON）
 
-**DON** 是由独立节点组成的网络，会：
+**DON**是由独立节点组成的网络，会：
 
 1. 各自独立执行你的 workflow
 2. 比对各自结果

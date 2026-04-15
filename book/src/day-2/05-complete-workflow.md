@@ -358,7 +358,7 @@ cast send $MARKET_ADDRESS \
   --private-key $CRE_ETH_PRIVATE_KEY
 ```
 
-**请保存交易哈希！** 下一步会用到。
+**请保存交易哈希！**下一步会用到。
 
 ### 步骤 2：运行 Simulation
 
@@ -392,7 +392,7 @@ Enter transaction hash (0x...):
 Enter event index (0-based): 0
 ```
 
-输入 **0**。
+输入**0**。
 
 ### 预期输出
 
@@ -452,7 +452,7 @@ cast send $MARKET_ADDRESS \
 
 ## 🎉 大功告成！
 
-**恭喜！** 你已经用 CRE 搭建并跑通了一个完整的 AI 驱动预测市场！
+**恭喜！**你已经用 CRE 搭建并跑通了一个完整的 AI 驱动预测市场！
 
 快速回顾你完成的内容：
 

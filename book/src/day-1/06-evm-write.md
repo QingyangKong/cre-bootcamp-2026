@@ -6,8 +6,8 @@
 
 EVM Write capability 让你的 workflow 向智能合约提交经密码学签名的 report。与传统直接发送交易的 web3 应用不同，CRE 使用安全的两步流程：
 
-1. **生成已签名的 report** — 你的数据经 ABI 编码，并封装在密码学签名的「包」中
-2. **提交 report** — 已签名的 report 通过 Chainlink `KeystoneForwarder` 提交到你的 consumer 合约
+1. **生成已签名的 report**— 你的数据经 ABI 编码，并封装在密码学签名的「包」中
+2. **提交 report**— 已签名的 report 通过 Chainlink `KeystoneForwarder` 提交到你的 consumer 合约
 
 ### 创建 EVM client
 

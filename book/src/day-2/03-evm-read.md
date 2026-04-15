@@ -1,6 +1,6 @@
 # EVM Read：读取合约状态
 
-在用 AI 结算市场之前，我们需要从区块链读取市场详情。下面学习 **EVM Read** capability。
+在用 AI 结算市场之前，我们需要从区块链读取市场详情。下面学习**EVM Read** capability。
 
 ## 熟悉该 capability
 
@@ -61,7 +61,7 @@ const decodedValue = decodeFunctionResult({
 
 ### 关于 Go bindings 的说明
 
-**Go SDK** 要求你先从合约 ABI 生成类型安全的 bindings，再与之交互：
+**Go SDK**要求你先从合约 ABI 生成类型安全的 bindings，再与之交互：
 
 ```bash
 cre generate-bindings evm
@@ -288,7 +288,7 @@ Enter transaction hash (0x...):
 Enter event index (0-based): 0
 ```
 
-输入 **0**。
+输入**0**。
 
 ### 预期输出
 

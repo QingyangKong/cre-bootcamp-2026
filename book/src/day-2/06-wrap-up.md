@@ -1,4 +1,4 @@
-# 收尾：端到端与后续方向
+# 收尾：后续方向
 
 你已经搭建了一个 AI 驱动的预测市场。下面从头到尾梳理完整流程。
 
@@ -107,16 +107,6 @@ cast send $MARKET_ADDRESS \
 
 
 ## 接下来做什么？
-
-### 🏆 Convergence：Chainlink Hackathon
-
-![cre-hackathon-2026](../assets/cre-hackathon-2026.png)
-
-**Convergence Hackathon** 邀请你使用 Chainlink Runtime Environment 打造进阶智能合约，奖池高达 $100K。
-
-连接链、数据、AI 与企业系统——全部在同一个 workflow 中完成。
-
-检验你新学的 CRE 技能！参加即将举办的 hackathon，做出令人眼前一亮的东西。
 
 可探索的方向：
 - Stablecoin 发行

@@ -4,7 +4,7 @@
 
 ## 熟悉 HTTP Trigger
 
-当向 workflow 的指定端点发起 HTTP 请求时，**HTTP Trigger** 会触发。这让你可以从外部系统启动 workflow，适用于：
+当向 workflow 的指定端点发起 HTTP 请求时，**HTTP Trigger**会触发。这让你可以从外部系统启动 workflow，适用于：
 
 - 创建资源（例如我们的市场）
 - 由 API 驱动的 workflow
