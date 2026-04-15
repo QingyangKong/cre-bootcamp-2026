@@ -1,47 +1,37 @@
-# Welcome to CRE Bootcamp
+# 欢迎参加 CRE Bootcamp
 
 ![banner](../assets/banner.png)
 
-Welcome to the **CRE Bootcamp: Building AI-Powered Prediction Markets**!
+欢迎参加 **CRE Bootcamp：构建 AI 驱动的预测市场**！
 
-This is a 2-day hands-on bootcamp designed to give you an in-depth, developer-focused walkthrough of how to build with the Chainlink Runtime Environment (CRE).
+这是一个为期两天的实操训练营，旨在为你提供深入的、以开发者为中心的 Chainlink Runtime Environment (CRE) 构建指南。
 
-## 🎤 Meet Your Instructors
+## 🎤 讲师介绍
 
-### Andrej Rakic
+### Frank Kong
 **DevRel Engineer, Chainlink Labs**
 
-![img](https://media.licdn.com/dms/image/v2/D4E03AQFsEcSPtVbMAg/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1701278331107?e=2147483647&v=beta&t=MZF8AVrY1-x9zOA5rpu6tf1izQH0vdo77lduLuUDpWA)
+![img](../assets/Frank.png)
 
-X (Twitter): [@andrej_dev](https://x.com/andrej_dev)
+X (Twitter): [@AlongHudson](https://x.com/AlongHudson)
 
-LinkedIn: [Andrej Rakic](https://www.linkedin.com/in/andrejrakic/)
+LinkedIn: [Frank Kong](https://www.linkedin.com/in/frank-kong-0a927785/)
 
-### Solange Gueiros
-**DevRel Education Manager, Chainlink Labs**
+## 课程安排
 
-![img](https://pbs.twimg.com/profile_images/1260607243436859397/SHlzS-Vl_200x200.jpg)
+### 📅 Day 1：基础 + 市场创建（2 小时）
 
-X (Twitter): [@solangegueiros](https://twitter.com/solangegueiros)
+构建你的第一个 CRE workflow，在链上创建预测市场：
+- CRE 思维模型与项目搭建
+- 智能合约部署
+- HTTP Trigger 与 EVM Write Capability
+- ❓ 答疑 - 开放提问环节
 
-LinkedIn: [Solange Gueiros](https://www.linkedin.com/in/solangegueiros/)
+### 📅 Day 2：完整结算工作流（2 小时）
 
-## Run of Show
-
-### 📅 Day 1: Foundations + Market Creation (2 hours)
-
-Build your first CRE workflow that creates prediction markets on-chain:
-- CRE Mental Model & Project Setup
-- Smart Contract Deployment
-- HTTP Trigger & EVM Write Capability
-- ❓ Q&A - Open floor for questions
-
-### 📅 Day 2: Complete Settlement Workflow (2 hours)
-
-Wire together a complete AI-powered settlement system:
-- Log Trigger for Event-Driven Workflows
+将一个完整的 AI 驱动结算系统串联起来：
+- 用于事件驱动工作流的 Log Trigger
 - EVM Read Capability
-- AI Integration with Google Gemini
-- End-to-End Settlement Flow
-- ❓ Q&A - Open floor for questions
-
+- 与 Google Gemini 的 AI 集成
+- 端到端结算流程
+- ❓ 答疑 - 开放提问环节

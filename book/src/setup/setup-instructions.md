@@ -1,42 +1,42 @@
-# 🖥️ Setup Instructions
+# 🖥️ 环境准备
 
-Complete these steps **before** the bootcamp begins to ensure a smooth experience.
+请在训练营开始 **之前** 完成以下步骤，以确保流畅的学习体验。
 
-## This Book
+## 本教程
 
-This book is available at:
+本教程可在以下地址访问：
 
 ```bash
-https://smartcontractkit.github.io/cre-bootcamp-2026
+https://qingyangkong.github.io/cre-bootcamp-2026
 ```
 
-## Important Prerequisites
+## 重要的前置准备
 
-To get the most out of this bootcamp, we recommend you have the following prepared **before Day 1**. Some of this will be covered briefly so we can spend more time on building.
+为了充分利用本训练营，我们建议你在 **Day 1 之前** 准备好以下环境。部分内容会在课上简要介绍，以便我们将更多时间用于实操。
 
-### Required Setup
+### 必需环境
 
-- **Node.js v20 or higher** - [Download here](https://nodejs.org/)
-- **Bun v1.3 or higher** - [Download here](https://bun.sh/docs/installation)
-- **CRE CLI** - [Installation instructions](https://docs.chain.link/cre/getting-started/cli-installation)
-- **Foundry** - [Installation instructions](https://book.getfoundry.sh/getting-started/installation)
-- **Add Ethereum Sepolia network to your wallet** - [Add network here](https://chainlist.org/chain/11155111)
-- **Get Ethereum Sepolia ETH from the faucet** - [Chainlink Faucet](https://faucets.chain.link/sepolia)
-- **Gemini LLM API key** - [Get from Google AI Studio](https://aistudio.google.com/apikey)
+- **Node.js v20 或更高版本** - [在此下载](https://nodejs.org/)
+- **Bun v1.3 或更高版本** - [在此下载](https://bun.sh/docs/installation)
+- **CRE CLI** - [安装说明](https://docs.chain.link/cre/getting-started/cli-installation)
+- **Foundry** - [安装说明](https://book.getfoundry.sh/getting-started/installation)
+- **将 Ethereum Sepolia 网络添加到你的钱包** - [在此添加](https://chainlist.org/chain/11155111)
+- **从水龙头获取 Sepolia ETH** - [Chainlink Faucet](https://faucets.chain.link/sepolia)
+- **Gemini LLM API 密钥** - [从 Google AI Studio 获取](https://aistudio.google.com/apikey)
 
-### Nice to Have
+### 建议安装
 
-- 📚 **Install mdBook** - So you can build and read the documentation locally
+- 📚 **安装 mdBook** - 用于在本地构建和阅读文档
   ```bash
   cargo install mdbook
   ```
 
-## Reference Repository
+## 参考仓库
 
-The complete bootcamp project is available as a reference:
+完整的训练营项目可作为参考：
 
 ```bash
 https://github.com/smartcontractkit/cre-bootcamp-2026
 ```
 
-> **Note**: You don't need to clone this! During the bootcamp, we'll build everything from scratch. The repository is there if you get stuck or want to compare your code.
+> **说明**：你不需要克隆它！训练营期间我们会从头开始构建所有内容。该仓库仅在你遇到问题或想对照代码时使用。

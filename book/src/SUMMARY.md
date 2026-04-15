@@ -1,14 +1,14 @@
 # Summary
 
-# 🖥️ Setup Instructions
+# 🖥️ 环境准备
 
-- [Setup Instructions](setup/setup-instructions.md)
+- [环境准备](setup/setup-instructions.md)
 
-# 🎬 Stage Setting
+# 🎬 开场准备
 
-- [Welcome to CRE Bootcamp](setup/welcome.md)
-- [Always Stay Connected](setup/stay-connected.md)
-- [CRE CLI Setup Sprint](setup/cre-cli-setup.md)
+- [欢迎参加 CRE Bootcamp](setup/welcome.md)
+- [保持联系](setup/stay-connected.md)
+- [CRE CLI 快速配置](setup/cre-cli-setup.md)
 
 # 📅 第一天：基础知识 + 创建市场
 

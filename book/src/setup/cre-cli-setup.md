@@ -1,22 +1,22 @@
-# CRE CLI Setup Sprint
+# CRE CLI 快速配置
 
-Before we start building, let's make sure your CRE environment is set up correctly. We'll follow the official setup instructions from [cre.chain.link](https://cre.chain.link).
+在开始构建之前，让我们确认你的 CRE 环境已正确搭建。我们将按照 [cre.chain.link](https://cre.chain.link) 上的官方指南进行设置。
 
-## Step 1: Create a CRE Account
+## 步骤 1：创建 CRE 账户
 
-1. Go to [cre.chain.link](https://cre.chain.link)
-2. Create an account or sign in
-3. Access the CRE platform dashboard
+1. 访问 [cre.chain.link](https://cre.chain.link)
+2. 创建账户或登录
+3. 进入 CRE 平台仪表盘
 
 ![CRE Signup](../assets/cre-signup.png)
 
-## Step 2: Install the CRE CLI
+## 步骤 2：安装 CRE CLI
 
-The **CRE CLI** is essential for compiling and simulating workflows. It compiles your TypeScript code into WebAssembly (WASM) binaries and allows you to test workflows locally before deployment.
+**CRE CLI** 是编译和模拟 workflow 的必备工具。它将你的 TypeScript 代码编译为 WebAssembly (WASM) 二进制文件，并允许你在部署前在本地测试 workflow。
 
-### Option 1: Automatic Installation
+### 方式 1：自动安装
 
-The easiest way to install the CRE CLI is using the installation script ([reference docs](https://docs.chain.link/cre/getting-started/cli-installation)):
+最简单的安装方式是使用安装脚本（[参考文档](https://docs.chain.link/cre/getting-started/cli-installation)）：
 
 #### macOS/Linux
 
@@ -30,56 +30,56 @@ curl -sSL https://cre.chain.link/install.sh | sh
 irm https://cre.chain.link/install.ps1 | iex
 ```
 
-### Option 2: Manual Installation
+### 方式 2：手动安装
 
-If you prefer to install manually or the automatic installation doesn't work for your environment, follow the installation instructions from the Official Chainlink Documentation for your platform:
+如果你更倾向于手动安装，或自动安装不适用于你的环境，请参考 Chainlink 官方文档中适用于你平台的安装说明：
 
 - [macOS/Linux](https://docs.chain.link/cre/getting-started/cli-installation/macos-linux#manual-installation)
 - [Windows](https://docs.chain.link/cre/getting-started/cli-installation/windows#manual-installation)
 
-### Verify Installation
+### 验证安装
 
 ```bash
 cre version
 ```
 
-## Step 3: Authenticate with CRE CLI
+## 步骤 3：使用 CRE CLI 进行身份验证
 
-Authenticate your CLI with your CRE account:
+将你的 CLI 与 CRE 账户关联：
 
 ```bash
 cre login
 ```
 
-This will open a browser window for you to authenticate. Once authenticated, your CLI is ready to use.
+这将打开浏览器窗口供你进行身份验证。验证通过后，你的 CLI 就可以使用了。
 
 ![CRE Successful Login](../assets/cre-successful-login.png)
 
-Check your login status and account details with:
+查看登录状态和账户信息：
 
 ```bash
 cre whoami
 ```
 
-## Troubleshooting
+## 故障排除
 
-### CRE CLI Not Found
+### 找不到 CRE CLI 命令
 
-If `cre` command is not found after installation:
+如果安装后 `cre` 命令未找到：
 
 ```bash
-# Add to your shell profile (~/.bashrc, ~/.zshrc, etc.)
+# 添加到你的 shell 配置文件（~/.bashrc、~/.zshrc 等）
 export PATH="$HOME/.cre/bin:$PATH"
 
-# Reload your shell
-source ~/.zshrc  # or ~/.bashrc
+# 重新加载 shell
+source ~/.zshrc  # 或 ~/.bashrc
 ```
 
-## What's Now Possible?
+## 现在你可以做什么？
 
-Now that your CRE environment is set up, you can:
+CRE 环境搭建完成后，你可以：
 
-- **Create new CRE projects**: Start by running the `cre init` command
-- **Compile workflows**: The CRE CLI compiles your TypeScript code into WASM binaries
-- **Simulate workflows**: Test your workflows locally with `cre workflow simulate`
-- **Deploy workflows**: Once ready, deploy to production (Early Access)
+- **创建新的 CRE 项目**：运行 `cre init` 命令开始
+- **编译 workflow**：CRE CLI 将你的 TypeScript 代码编译为 WASM 二进制文件
+- **模拟 workflow**：使用 `cre workflow simulate` 在本地测试 workflow
+- **部署 workflow**：准备好后部署到生产环境（Early Access）
